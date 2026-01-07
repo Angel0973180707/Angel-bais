@@ -1,18 +1,1 @@
-{
-  "name": "Angel-偏見覺察 (智慧版)",
-  "short_name": "Angel",
-  "description": "具備智慧隨機引導語與語音控制的穩定空間。",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#F9F5F0",
-  "theme_color": "#B99B6B",
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "192x192 512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
+
