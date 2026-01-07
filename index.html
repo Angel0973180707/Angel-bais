@@ -25,13 +25,13 @@
         body {
             margin: 0;
             font-family: "PingFang TC", "Noto Sans TC", sans-serif;
-            /* 解決底部被切到的關鍵：使用 dvh */
+            /* 使用 dvh 解決手機瀏覽器底部工具列遮擋問題 */
             height: 100dvh; 
             background: linear-gradient(135deg, var(--bg-start), var(--bg-end)) !important;
             color: var(--text-main) !important;
             display: flex;
             justify-content: center;
-            overflow: hidden; /* 防止出現多餘捲軸 */
+            overflow: hidden;
         }
 
         .container { 
@@ -42,87 +42,78 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: space-between; /* 均勻分佈內容 */
+            justify-content: space-between; 
             padding-bottom: calc(env(safe-area-inset-bottom) + 20px); 
         }
 
-        /* 標題區 */
-        header { 
-            text-align: center; 
-            margin-top: 5dvh; 
+        /* 頁面切換動畫 */
+        .page { width: 100%; animation: fadeIn 0.6s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        #intro-page { display: flex; }
+
+        header { text-align: center; margin-top: 2dvh; }
+        h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; margin: 0; }
+
+        /* 倒數計時與呼吸圓環 */
+        .timer-container {
+            position: relative;
+            width: 150px; height: 150px;
+            margin-bottom: 30px;
+            display: flex; align-items: center; justify-content: center;
         }
-        h1 { 
-            font-weight: 300; 
-            font-size: 1.8rem; 
-            letter-spacing: 6px; 
-            margin: 0 0 10px 0; 
+        .breath-circle {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, #F2D388 0%, transparent 70%);
+            border-radius: 50%; filter: blur(12px);
+            animation: breathe 10s ease-in-out infinite;
         }
-        
-        .intro-text {
-            font-size: 1.05rem;
-            letter-spacing: 2px;
-            word-break: keep-all;
-            opacity: 0.8;
-            line-height: 1.8;
+        #timer-number {
+            font-size: 2rem; font-weight: 300; color: var(--accent-soft);
+            z-index: 2;
         }
 
-        /* 說明卡片 */
-        .description-card {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 25px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(93, 82, 69, 0.05);
-            text-align: center;
-            margin: 15px 0;
-        }
-        .desc-title { font-weight: bold; color: var(--accent-soft); font-size: 0.9rem; letter-spacing: 2px; }
+        /* 練習內容區 */
+        .step-box { min-height: 200px; text-align: center; z-index: 2; }
+        .sense-tag { font-size: 0.85rem; color: var(--accent-soft); letter-spacing: 4px; margin-bottom: 20px; font-weight: bold; }
+        .step-text { font-size: 1.35rem; letter-spacing: 1.5px; line-height: 1.8; }
+        .guide-line { display: block; margin-bottom: 5px; }
 
-        /* 選單網格：縮小間距以適應螢幕高度 */
-        .menu-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            width: 100%; 
-            margin-bottom: 10px;
-        }
-        
+        /* 按鈕樣式 */
         .nav-btn {
             background: var(--white) !important;
             border: 1px solid rgba(185, 155, 107, 0.15);
-            aspect-ratio: 1 / 1.1; /* 讓按鈕隨寬度自動縮放高度 */
             border-radius: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 1.1rem;
             color: var(--text-main) !important;
             box-shadow: 0 8px 20px rgba(93, 82, 69, 0.08);
             cursor: pointer;
             transition: transform 0.2s;
+            text-decoration: none;
         }
         .nav-btn:active { transform: scale(0.96); }
-        .nav-btn span { font-size: 2.2rem; margin-bottom: 8px; }
 
-        /* 練習頁 */
-        .page { width: 100%; animation: fadeIn 0.6s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
-        #intro-page { display: flex; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .menu-btn { aspect-ratio: 1 / 1.15; font-size: 1.1rem; }
+        .menu-btn span { font-size: 2.5rem; margin-bottom: 10px; }
 
-        .breath-light {
-            width: 120px; height: 120px; background: radial-gradient(circle, #F2D388 0%, transparent 75%);
-            margin-bottom: 30px; border-radius: 50%; filter: blur(12px);
-            animation: breathe 6s ease-in-out infinite;
+        /* 說明卡片 */
+        .description-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 30px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(93, 82, 69, 0.05);
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .step-box { min-height: 200px; text-align: center; }
-        .sense-tag { font-size: 0.8rem; color: var(--accent-soft); letter-spacing: 3px; margin-bottom: 15px; font-weight: bold; }
-        .guide-line { display: block; margin-bottom: 5px; }
-
-        @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
+        @keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .footer-action { font-size: 0.85rem; opacity: 0.5; cursor: pointer; margin-top: 20px; }
+        .footer-hint { font-size: 0.85rem; opacity: 0.5; margin-top: 20px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -131,105 +122,146 @@
     <div id="intro-page" class="page">
         <header><h1>Angel</h1></header>
         <div class="description-card">
-            <span class="desc-title">使用時機</span><br>
-            <span class="guide-line">心跳加速、感到被誤解、</span>
-            <span class="guide-line">或是情緒即將爆發的瞬間。</span>
-            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
-            <span class="desc-title">練習目標</span><br>
-            <span class="guide-line">找回當下的穩定，</span>
-            <span class="guide-line">看見偏見，但不被帶走。</span>
+            <span style="font-weight:bold; color:var(--accent-soft); letter-spacing: 2px;">使用說明</span><br><br>
+            <span class="guide-line">每個練習將自動計時 10 秒</span>
+            <span class="guide-line">並配合溫柔的語音引導</span>
+            <hr style="border:0; border-top:1px solid #f0ede9; margin:15px 0;">
+            <span class="guide-line">請在衝突或焦慮的瞬間</span>
+            <span class="guide-line">開啟這個空間，找回平靜。</span>
         </div>
-        <button class="nav-btn" style="width:100%; height:60px; aspect-ratio: unset; font-weight:bold;" onclick="showPage('home-page')">進入空間</button>
+        <button class="nav-btn" style="width:100%; height:70px; font-weight:bold; font-size: 1.2rem;" onclick="showPage('home-page')">準備好了</button>
     </div>
 
     <div id="home-page" class="page">
-        <header><h1>Angel</h1></header>
-        <div class="intro-text">
-            <span class="guide-line">生活偶爾會起風，</span>
-            <span class="guide-line">選一個身分，把心站穩。</span>
-        </div>
+        <header style="margin-bottom: 30px;">
+            <h1>選擇練習對象</h1>
+        </header>
         <div class="menu-grid">
-            <button class="nav-btn" onclick="start('kids')"><span>🎨</span>小小孩</button>
-            <button class="nav-btn" onclick="start('primary')"><span>🎒</span>孩子們</button>
-            <button class="nav-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
-            <button class="nav-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
+            <button class="nav-btn menu-btn" onclick="start('kids')"><span>🎨</span>小小孩</button>
+            <button class="nav-btn menu-btn" onclick="start('primary')"><span>🎒</span>孩子們</button>
+            <button class="nav-btn menu-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
+            <button class="nav-btn menu-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
         </div>
-        <div class="footer-action" onclick="showPage('intro-page')">查看說明</div>
+        <div class="footer-hint" onclick="showPage('intro-page')">查看說明時機</div>
     </div>
 
     <div id="content-page" class="page">
-        <div class="breath-light"></div>
+        <div class="timer-container">
+            <div class="breath-circle"></div>
+            <div id="timer-number">10</div>
+        </div>
         <div class="step-box" id="step-box"></div>
-        <div id="next-btn" class="footer-action" onclick="next()">— 輕觸螢幕，繼續下一步 —</div>
-        <div id="finish-btn" class="footer-action" style="display:none;" onclick="location.reload()">— 練習完成，回到起點 —</div>
+        <div id="voice-hint" class="footer-hint">— 正在播放語音導引 —</div>
+        <button id="finish-btn" class="nav-btn" style="display:none; width:100%; height:60px; font-weight:bold;" onclick="location.reload()">練習完成，回到起點</button>
     </div>
 </div>
 
 <script>
     const dialogs = {
         kids: [
-            { sense: "👀 視覺", text: "<span class='guide-line'>閉上眼，感受一下</span><span class='guide-line'>心裡現在是什麼顏色？</span>" },
-            { sense: "✋ 觸覺", text: "<span class='guide-line'>想像把顏色捧在手心</span><span class='guide-line'>它是軟綿綿的泡泡嗎？</span>" },
-            { sense: "🌬️ 嗅覺", text: "<span class='guide-line'>輕輕地吹一口氣</span><span class='guide-line'>讓顏色飄向遠方。</span>" }
+            { sense: "👀 視覺", text: "閉上眼，感受一下，心裡現在是什麼顏色？", time: 10 },
+            { sense: "✋ 觸覺", text: "想像把顏色捧在手心，它是軟綿綿的泡泡嗎？", time: 10 },
+            { sense: "🌬️ 嗅覺", text: "輕輕地吹一口氣，讓顏色飄向遠方。", time: 8 }
         ],
         primary: [
-            { sense: "👂 聽覺", text: "<span class='guide-line'>靜下來，聽聽看</span><span class='guide-line'>環境裡最遠的一個聲音。</span>" },
-            { sense: "👀 視覺", text: "<span class='guide-line'>找找看房間裡</span><span class='guide-line'>三個藍色的東西。</span>" },
-            { sense: "🧘 穩定", text: "<span class='guide-line'>感覺你的腳趾頭</span><span class='guide-line'>用力抓著地板的力量。</span>" }
+            { sense: "👂 聽覺", text: "靜下來，聽聽看環境裡最遠的一個聲音。", time: 10 },
+            { sense: "👀 視覺", text: "在房間裡，找出三個藍色的東西。", time: 10 },
+            { sense: "🧘 穩定", text: "感覺你的腳趾頭，用力抓著地板的力量。", time: 10 }
         ],
         teen: [
-            { sense: "✋ 觸覺", text: "<span class='guide-line'>摸摸衣服的材質</span><span class='guide-line'>是粗糙還是柔軟？</span>" },
-            { sense: "👃 嗅覺", text: "<span class='guide-line'>深深吸氣，感覺</span><span class='guide-line'>涼涼的空氣進到鼻腔。</span>" },
-            { sense: "🧠 覺察", text: "<span class='guide-line'>問問心裡的自己：</span><span class='guide-line'>我現在的安全感在哪裡？</span>" }
+            { sense: "✋ 觸覺", text: "摸摸衣服的材質，是粗糙還是柔軟？", time: 10 },
+            { sense: "👃 嗅覺", text: "深深吸氣，感覺涼涼的空氣進到鼻腔。", time: 10 },
+            { sense: "🧠 覺察", text: "問問心裡的自己：我現在的安全感在哪裡？", time: 12 }
         ],
         adult: [
-            { sense: "🌍 空間", text: "<span class='guide-line'>標註這份情緒：</span><span class='guide-line'>它是屬於「現在」嗎？</span>" },
-            { sense: "👂 聽覺", text: "<span class='guide-line'>聽聽自己的呼吸</span><span class='guide-line'>它是急促還是平緩？</span>" },
-            { sense: "🌿 整合", text: "<span class='guide-line'>我看見了偏見存在</span><span class='guide-line'>但我選擇，溫和地對待。</span>" }
+            { sense: "🌍 空間", text: "標註這份情緒：它是屬於「現在」嗎？", time: 10 },
+            { sense: "👂 聽覺", text: "聽聽自己的呼吸，它是急促還是平緩？", time: 10 },
+            { sense: "🌿 整合", text: "我看見了偏見存在，但我選擇溫和地對待。", time: 10 }
         ]
     };
 
     let currentSteps = [];
     let currentIdx = 0;
+    let timerInterval;
 
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-        const target = document.getElementById(pageId);
-        target.style.display = 'flex';
+        document.getElementById(pageId).style.display = 'flex';
     }
 
     function start(type) {
         currentSteps = dialogs[type];
         currentIdx = 0;
         showPage('content-page');
-        showStep();
+        runStep();
     }
 
-    function showStep() {
-        const box = document.getElementById('step-box');
+    function runStep() {
+        if (currentIdx >= currentSteps.length) {
+            finish();
+            return;
+        }
+
         const item = currentSteps[currentIdx];
+        const box = document.getElementById('step-box');
+        
+        // 排版文字：將逗號替換為分行
+        const formattedText = item.text.replace(/，/g, '</span><span class="guide-line">');
         box.innerHTML = `
             <div class="sense-tag">${item.sense}</div>
-            <div class="step-text">${item.text}</div>
+            <div class="step-text"><span class="guide-line">${formattedText}</span></div>
         `;
-    }
 
-    function next() {
-        if (currentIdx < currentSteps.length - 1) {
+        // 語音朗讀
+        speak(item.text);
+
+        // 啟動倒數
+        startTimer(item.time, () => {
             currentIdx++;
-            showStep();
-        } else {
-            document.getElementById('step-box').innerHTML = `
-                <div class="sense-tag">✨ 練習達成</div>
-                <div class="step-text" style="font-size:1.1rem; opacity:0.8;">
-                    <span class="guide-line">謝謝你，陪自己走了這段路。</span>
-                    <span class="guide-line">現在，我們更有力量了。</span>
-                </div>`;
-            document.getElementById('next-btn').style.display = 'none';
-            document.getElementById('finish-btn').style.display = 'block';
-        }
+            runStep();
+        });
     }
 
+    function startTimer(seconds, callback) {
+        let timeLeft = seconds;
+        const display = document.getElementById('timer-number');
+        display.innerText = timeLeft;
+
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            display.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                callback();
+            }
+        }, 1000);
+    }
+
+    function speak(content) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(content);
+        utterance.lang = 'zh-TW';
+        utterance.rate = 0.8; // 溫柔語速
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function finish() {
+        clearInterval(timerInterval);
+        document.getElementById('timer-number').innerText = "✨";
+        document.getElementById('step-box').innerHTML = `
+            <div class="sense-tag">練習達成</div>
+            <div class="step-text">
+                <span class="guide-line">謝謝你，陪自己走了這段路。</span>
+                <span class="guide-line">現在，我們更有力量了。</span>
+            </div>`;
+        document.getElementById('voice-hint').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        speak("練習完成。謝謝你陪自己走這段路，現在我們更有力量了。");
+    }
+
+    // 註冊 Service Worker
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
     }
