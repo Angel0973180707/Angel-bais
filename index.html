@@ -22,7 +22,7 @@
             width: 100%; max-width: 480px; height: 100dvh; 
             padding: 20px 25px; display: flex; flex-direction: column; 
             align-items: center; justify-content: space-between; 
-            padding-bottom: calc(env(safe-area-inset-bottom) + 20px); 
+            padding-bottom: calc(env(safe-area-inset-bottom) + 15px); 
         }
         .page { width: 100%; animation: fadeIn 0.6s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
         #home-page { display: flex; }
@@ -31,6 +31,16 @@
         h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; margin: 0; }
 
         .settings-area { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; width: 100%; align-items: center; }
+        
+        /* 音樂選擇器樣式 */
+        .music-selector {
+            width: 85%; background: var(--white); border-radius: 20px;
+            padding: 8px; display: flex; justify-content: space-around;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); border: 1px solid rgba(185, 155, 107, 0.1);
+        }
+        .music-opt { font-size: 0.8rem; cursor: pointer; opacity: 0.4; transition: 0.3s; padding: 5px 10px; border-radius: 12px; }
+        .music-opt.active { opacity: 1; background: #EFE9E1; font-weight: bold; }
+
         .toggle-btn {
             display: flex; align-items: center; gap: 10px; padding: 10px 20px;
             background: var(--white); border-radius: 50px; width: 85%;
@@ -38,7 +48,7 @@
         }
         .toggle-label { font-size: 0.85rem; letter-spacing: 1px; flex-grow: 1; }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
         .nav-btn {
             background: var(--white) !important; border: 1px solid rgba(185, 155, 107, 0.15);
             border-radius: 25px; display: flex; flex-direction: column;
@@ -46,10 +56,10 @@
             color: var(--text-main) !important; box-shadow: 0 8px 20px rgba(93, 82, 69, 0.08);
             cursor: pointer; transition: transform 0.2s;
         }
-        .menu-btn { aspect-ratio: 1 / 1.1; font-size: 1.1rem; }
+        .menu-btn { aspect-ratio: 1 / 1.05; font-size: 1.05rem; }
         .menu-btn span { font-size: 2.2rem; margin-bottom: 8px; }
 
-        .breath-area { position: relative; width: 150px; height: 150px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; }
+        .breath-area { position: relative; width: 140px; height: 140px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; }
         .breath-circle { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, #F2D388 0%, transparent 70%); border-radius: 50%; filter: blur(12px); animation: breathe 8s ease-in-out infinite; }
         #timer-display { font-size: 2.2rem; font-weight: 300; color: var(--accent-soft); z-index: 2; }
 
@@ -59,24 +69,25 @@
 
         @keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .footer-hint { font-size: 0.8rem; opacity: 0.5; margin-top: 15px; text-align: center; }
+        .footer-hint { font-size: 0.75rem; opacity: 0.5; margin-top: 10px; text-align: center; }
     </style>
 </head>
 <body>
 
-<audio id="bg-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
-</audio>
+<audio id="bg-music" loop></audio>
 
 <div class="container">
     <div id="home-page" class="page">
         <header><h1>Angel</h1></header>
         
         <div class="settings-area">
-            <div class="toggle-btn" onclick="toggleMusic()">
-                <span id="music-icon">🎵</span>
-                <span class="toggle-label" id="music-text">背景音樂：關閉</span>
+            <div class="music-selector">
+                <div class="music-opt active" id="m-none" onclick="selectMusic('none')">🔇 無</div>
+                <div class="music-opt" id="m-piano" onclick="selectMusic('piano')">🎹 鋼琴</div>
+                <div class="music-opt" id="m-rain" onclick="selectMusic('rain')">🌧️ 雨聲</div>
+                <div class="music-opt" id="m-forest" onclick="selectMusic('forest')">🌲 森林</div>
             </div>
+
             <div class="toggle-btn" onclick="toggleVoice()">
                 <span id="voice-icon">🔊</span>
                 <span class="toggle-label" id="voice-text">語音導引：開啟</span>
@@ -93,7 +104,7 @@
             <button class="nav-btn menu-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
             <button class="nav-btn menu-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
         </div>
-        <p class="footer-hint">隨機導引 · 智慧模式切換</p>
+        <p class="footer-hint">五感覺察 · 自選療癒氛圍</p>
     </div>
 
     <div id="content-page" class="page">
@@ -108,6 +119,13 @@
 </div>
 
 <script>
+    const musicLibrary = {
+        none: "",
+        piano: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        rain: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", // 此處應換為實際雨聲音軌
+        forest: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" // 此處應換為實際森林音軌
+    };
+
     const pool = {
         kids: [
             [{s:"👀 視覺", t:"閉上眼，心裡現在是什麼顏色？"}, {s:"✋ 觸覺", t:"想像這顏色像棉花糖一樣軟。"}, {s:"🌬️ 嗅覺", t:"聞聞看，它有草莓的味道嗎？"}],
@@ -120,7 +138,7 @@
             [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
         ],
         teen: [
-            [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
+            [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔的涼爽。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
             [{s:"👂 聽覺", t:"暫時聽聽，環境原本的背景噪音。"}, {s:"👀 視覺", t:"注視一個點，觀察它的光影變化。"}, {s:"🧠 覺察", t:"如果情緒有名字，它現在叫什麼？"}],
             [{s:"✋ 觸覺", t:"感受手機或桌面，指尖傳來的質地。"}, {s:"🌬️ 呼吸", t:"吸氣 4 秒，感覺胸腔擴張的空間。"}, {s:"🧠 覺察", t:"這份壓力，是我的還是別人的？"}]
         ],
@@ -131,18 +149,17 @@
         ]
     };
 
+    let selectedMusic = 'none';
     let isVoiceEnabled = true;
     let isAutoEnabled = true;
-    let isMusicEnabled = false;
     let currentSteps = [];
     let currentIdx = 0;
     let timerInterval;
 
-    function toggleMusic() {
-        isMusicEnabled = !isMusicEnabled;
-        const music = document.getElementById('bg-music');
-        document.getElementById('music-icon').innerText = isMusicEnabled ? "🎵" : "🔇";
-        document.getElementById('music-text').innerText = `背景音樂：${isMusicEnabled ? '開啟' : '關閉'}`;
+    function selectMusic(type) {
+        selectedMusic = type;
+        document.querySelectorAll('.music-opt').forEach(opt => opt.classList.remove('active'));
+        document.getElementById(`m-${type}`).classList.add('active');
     }
 
     function toggleVoice() {
@@ -162,10 +179,11 @@
         currentSteps = options[Math.floor(Math.random() * options.length)];
         currentIdx = 0;
         
-        if (isMusicEnabled) {
-            const music = document.getElementById('bg-music');
+        const music = document.getElementById('bg-music');
+        if (selectedMusic !== 'none') {
+            music.src = musicLibrary[selectedMusic];
             music.volume = 0.3;
-            music.play();
+            music.play().catch(e => console.log("需點擊後播放"));
         }
 
         document.getElementById('home-page').style.display = 'none';
@@ -228,7 +246,6 @@
     function stopPractice() {
         const music = document.getElementById('bg-music');
         music.pause();
-        music.currentTime = 0;
         location.reload();
     }
 </script>
