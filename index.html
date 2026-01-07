@@ -27,17 +27,16 @@
         .page { width: 100%; animation: fadeIn 0.6s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
         #home-page { display: flex; }
 
-        header { text-align: center; margin-bottom: 10px; }
+        header { text-align: center; margin-bottom: 5px; }
         h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; margin: 0; }
 
-        /* 切換開關區域 */
-        .settings-area { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; width: 100%; align-items: center; }
+        .settings-area { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; width: 100%; align-items: center; }
         .toggle-btn {
-            display: flex; align-items: center; gap: 10px; padding: 12px 25px;
-            background: var(--white); border-radius: 50px; width: 80%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid rgba(185, 155, 107, 0.1);
+            display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+            background: var(--white); border-radius: 50px; width: 85%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); cursor: pointer; border: 1px solid rgba(185, 155, 107, 0.1);
         }
-        .toggle-label { font-size: 0.9rem; letter-spacing: 1px; flex-grow: 1; }
+        .toggle-label { font-size: 0.85rem; letter-spacing: 1px; flex-grow: 1; }
 
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         .nav-btn {
@@ -47,30 +46,37 @@
             color: var(--text-main) !important; box-shadow: 0 8px 20px rgba(93, 82, 69, 0.08);
             cursor: pointer; transition: transform 0.2s;
         }
-        .menu-btn { aspect-ratio: 1 / 1.15; font-size: 1.1rem; }
-        .menu-btn span { font-size: 2.5rem; margin-bottom: 10px; }
+        .menu-btn { aspect-ratio: 1 / 1.1; font-size: 1.1rem; }
+        .menu-btn span { font-size: 2.2rem; margin-bottom: 8px; }
 
-        /* 呼吸與倒數核心區 */
-        .breath-area { position: relative; width: 160px; height: 160px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; }
+        .breath-area { position: relative; width: 150px; height: 150px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; }
         .breath-circle { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, #F2D388 0%, transparent 70%); border-radius: 50%; filter: blur(12px); animation: breathe 8s ease-in-out infinite; }
         #timer-display { font-size: 2.2rem; font-weight: 300; color: var(--accent-soft); z-index: 2; }
 
-        .step-box { min-height: 180px; text-align: center; cursor: pointer; width: 100%; }
-        .sense-tag { font-size: 0.85rem; color: var(--accent-soft); letter-spacing: 4px; margin-bottom: 20px; font-weight: bold; }
-        .step-text { font-size: 1.3rem; line-height: 1.8; letter-spacing: 1px; }
+        .step-box { min-height: 180px; text-align: center; cursor: pointer; width: 100%; z-index: 2; }
+        .sense-tag { font-size: 0.85rem; color: var(--accent-soft); letter-spacing: 4px; margin-bottom: 15px; font-weight: bold; }
+        .step-text { font-size: 1.25rem; line-height: 1.8; letter-spacing: 1px; }
 
         @keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .footer-hint { font-size: 0.85rem; opacity: 0.5; margin-top: 20px; text-align: center; }
+        .footer-hint { font-size: 0.8rem; opacity: 0.5; margin-top: 15px; text-align: center; }
     </style>
 </head>
 <body>
+
+<audio id="bg-music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container">
     <div id="home-page" class="page">
         <header><h1>Angel</h1></header>
         
         <div class="settings-area">
+            <div class="toggle-btn" onclick="toggleMusic()">
+                <span id="music-icon">🎵</span>
+                <span class="toggle-label" id="music-text">背景音樂：關閉</span>
+            </div>
             <div class="toggle-btn" onclick="toggleVoice()">
                 <span id="voice-icon">🔊</span>
                 <span class="toggle-label" id="voice-text">語音導引：開啟</span>
@@ -87,7 +93,7 @@
             <button class="nav-btn menu-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
             <button class="nav-btn menu-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
         </div>
-        <p class="footer-hint">隨機引導 · 五感融合</p>
+        <p class="footer-hint">隨機導引 · 智慧模式切換</p>
     </div>
 
     <div id="content-page" class="page">
@@ -95,26 +101,49 @@
             <div class="breath-circle"></div>
             <div id="timer-display"></div>
         </div>
-        <div class="step-box" id="step-box" onclick="manualNext()">
-            </div>
+        <div class="step-box" id="step-box" onclick="manualNext()"></div>
         <div id="page-hint" class="footer-hint"></div>
-        <button id="finish-btn" class="nav-btn" style="display:none; width:100%; height:60px; font-weight:bold; margin-top: 20px;" onclick="location.reload()">回到生活</button>
+        <button id="finish-btn" class="nav-btn" style="display:none; width:100%; height:60px; font-weight:bold; margin-top: 20px;" onclick="stopPractice()">結束練習</button>
     </div>
 </div>
 
 <script>
     const pool = {
-        kids: [[{s:"👀 視覺", t:"心裡現在是什麼顏色？"}, {s:"✋ 觸覺", t:"想像這顏色像棉花糖一樣軟。"}, {s:"🌬️ 嗅覺", t:"聞聞看，它有草莓的味道嗎？"}]],
-        primary: [[{s:"👂 聽覺", t:"聽聽看，環境裡最遠的聲音。"}, {s:"👀 視覺", t:"找找看，三個藍色的東西。"}, {s:"🧘 穩定", t:"感覺腳趾頭抓地的力量。"}]],
-        teen: [[{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺涼涼的空氣進到鼻腔。"}, {s:"🧠 覺察", t:"我現在的安全感在哪裡？"}]],
-        adult: [[{s:"🌍 空間", t:"這份情緒是屬於現在嗎？"}, {s:"👂 聽覺", t:"聽聽呼吸，是急促還是平緩？"}, {s:"🌿 整合", t:"看見偏見，但我選擇溫和對待。"}]],
+        kids: [
+            [{s:"👀 視覺", t:"閉上眼，心裡現在是什麼顏色？"}, {s:"✋ 觸覺", t:"想像這顏色像棉花糖一樣軟。"}, {s:"🌬️ 嗅覺", t:"聞聞看，它有草莓的味道嗎？"}],
+            [{s:"👂 聽覺", t:"聽聽腦袋裡，有沒有小精靈在唱歌？"}, {s:"✋ 觸覺", t:"摸摸肚子，感覺它像氣球一樣動。"}, {s:"👀 視覺", t:"想像心裡有一道彩虹亮起來了。"}],
+            [{s:"👀 視覺", t:"看著前方，找出一件最亮的東西。"}, {s:"👃 嗅覺", t:"深吸一口氣，聞到森林的味道嗎？"}, {s:"✋ 觸覺", t:"抱抱自己，感覺身體暖暖的。"}]
+        ],
+        primary: [
+            [{s:"👂 聽覺", t:"聽聽看，環境裡最遠的一個聲音。"}, {s:"👀 視覺", t:"找找看，三個藍色的東西。"}, {s:"🧘 穩定", t:"感覺腳趾頭用力抓地的力量。"}],
+            [{s:"✋ 觸覺", t:"摸摸身邊的物品，它是涼的還是熱的？"}, {s:"👂 聽覺", t:"聽聽看，離你最近的一個聲音。"}, {s:"🧘 穩定", t:"感覺雙手放在大腿上，沈沈的重量。"}],
+            [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
+        ],
+        teen: [
+            [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
+            [{s:"👂 聽覺", t:"暫時聽聽，環境原本的背景噪音。"}, {s:"👀 視覺", t:"注視一個點，觀察它的光影變化。"}, {s:"🧠 覺察", t:"如果情緒有名字，它現在叫什麼？"}],
+            [{s:"✋ 觸覺", t:"感受手機或桌面，指尖傳來的質地。"}, {s:"🌬️ 呼吸", t:"吸氣 4 秒，感覺胸腔擴張的空間。"}, {s:"🧠 覺察", t:"這份壓力，是我的還是別人的？"}]
+        ],
+        adult: [
+            [{s:"🌍 空間", t:"這份情緒，是屬於現在的嗎？"}, {s:"👂 聽覺", t:"聽聽呼吸，是急促還是平緩？"}, {s:"🌿 整合", t:"看見偏見，但我選擇溫和對待。"}],
+            [{s:"✋ 觸覺", t:"感覺腳掌與地面接觸的每個部位。"}, {s:"👀 視覺", t:"環顧四周，確認我現在是安全的。"}, {s:"🌿 整合", t:"允許混亂存在，我不必立刻解決。"}],
+            [{s:"🌍 空間", t:"感覺身體在椅子上，被支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中，被遺忘的微小聲音。"}, {s:"🌿 整合", t:"感謝自己，願意停下來覺察。"}]
+        ]
     };
 
     let isVoiceEnabled = true;
     let isAutoEnabled = true;
+    let isMusicEnabled = false;
     let currentSteps = [];
     let currentIdx = 0;
     let timerInterval;
+
+    function toggleMusic() {
+        isMusicEnabled = !isMusicEnabled;
+        const music = document.getElementById('bg-music');
+        document.getElementById('music-icon').innerText = isMusicEnabled ? "🎵" : "🔇";
+        document.getElementById('music-text').innerText = `背景音樂：${isMusicEnabled ? '開啟' : '關閉'}`;
+    }
 
     function toggleVoice() {
         isVoiceEnabled = !isVoiceEnabled;
@@ -132,6 +161,13 @@
         const options = pool[type];
         currentSteps = options[Math.floor(Math.random() * options.length)];
         currentIdx = 0;
+        
+        if (isMusicEnabled) {
+            const music = document.getElementById('bg-music');
+            music.volume = 0.3;
+            music.play();
+        }
+
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
         runStep();
@@ -188,7 +224,13 @@
         document.getElementById('page-hint').innerText = "";
         document.getElementById('finish-btn').style.display = 'block';
     }
+
+    function stopPractice() {
+        const music = document.getElementById('bg-music');
+        music.pause();
+        music.currentTime = 0;
+        location.reload();
+    }
 </script>
 </body>
 </html>
-
