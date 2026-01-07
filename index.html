@@ -2,16 +2,17 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Angel-偏見覺察</title>
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#B99B6B">
     <style>
         :root {
             --bg-start: #F9F5F0;
             --bg-end: #F2E9E1;
             --text-main: #5D5245;
             --accent-soft: #B99B6B;
-            --white: rgba(255, 255, 255, 0.85);
+            --white: rgba(255, 255, 255, 0.9);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -21,152 +22,169 @@
             font-family: "PingFang TC", "Noto Sans TC", sans-serif;
             background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite; /* 動態流動背景 */
+            animation: gradientBG 15s ease infinite;
             color: var(--text-main);
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            line-height: 1.8;
+            overflow: hidden;
         }
 
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        .container { width: 100%; max-width: 480px; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 480px; padding: 40px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
 
-        /* 標題與語錄區 */
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 3px; margin: 0; }
-        .quote-area { height: 60px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; opacity: 0.8; font-style: italic; }
-
-        /* 說明卡片 */
-        .intro-card {
-            background: var(--white);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 40px 10px 40px 10px; /* 不規則圓角增加設計感 */
-            line-height: 1.8;
+        header { text-align: center; margin-top: 20px; }
+        h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; margin-bottom: 10px; opacity: 0.9; }
+        
+        .intro-text {
+            text-align: center;
+            font-size: 1.05rem;
             margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            border: 1px solid rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+            word-break: keep-all;
+            opacity: 0.8;
         }
 
-        /* 圓形大按鈕選單 */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+        
         .nav-btn {
             background: var(--white);
-            border: none;
-            height: 160px;
+            border: 1px solid rgba(255,255,255,0.5);
+            height: 150px;
             border-radius: 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-main);
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            box-shadow: 0 10px 25px rgba(93, 82, 69, 0.05);
+            transition: transform 0.2s;
         }
-        .nav-btn:active { transform: scale(0.95); }
-        .nav-btn span { font-size: 2.5rem; margin-bottom: 10px; }
+        .nav-btn:active { transform: scale(0.96); }
+        .nav-btn span { font-size: 2.5rem; margin-bottom: 12px; }
 
         /* 練習模式介面 */
-        #content-page { display: none; width: 100%; text-align: center; }
+        #content-page { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease; }
+        
         .breath-light {
-            width: 140px; height: 140px; background: radial-gradient(circle, #F2D388 0%, transparent 70%);
-            margin: 40px auto; border-radius: 50%; filter: blur(15px);
-            animation: breatheAnimation 6s ease-in-out infinite;
-        }
-        @keyframes breatheAnimation { 0%, 100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
-
-        .step-card {
-            min-height: 200px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; line-height: 1.6; padding: 0 20px;
+            width: 140px; height: 140px; background: radial-gradient(circle, #F2D388 0%, transparent 75%);
+            margin: 20px auto; border-radius: 50%; filter: blur(12px);
+            animation: breathe 6s ease-in-out infinite;
         }
 
-        .footer-action { margin-top: 50px; cursor: pointer; opacity: 0.6; text-decoration: underline; font-size: 0.9rem; }
-
-        /* 留白互動區 */
-        .reflection-input {
-            width: 100%; border: none; border-bottom: 1px solid var(--accent-soft);
-            background: transparent; padding: 15px; font-size: 1.2rem; text-align: center;
-            color: var(--text-main); outline: none; margin-top: 30px;
+        .step-box {
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
         }
+
+        .sense-icon { font-size: 0.9rem; color: var(--accent-soft); margin-bottom: 20px; letter-spacing: 3px; font-weight: bold; }
+        .step-content { font-size: 1.4rem; letter-spacing: 1.5px; text-align: center; word-break: keep-all; }
+
+        @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .footer-hint { margin-bottom: 30px; font-size: 0.9rem; opacity: 0.6; letter-spacing: 1px; cursor: pointer; border-bottom: 1px solid transparent; }
+        .footer-hint:hover { border-bottom: 1px solid var(--accent-soft); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="home-page">
+    <div id="home-page" style="width: 100%;">
         <header>
             <h1>Angel</h1>
-            <div id="quote-box" class="quote-area">「在此刻，安放你的心。」</div>
+            <div class="intro-text">
+                生活偶爾會起風，<br>
+                我們在這裡一起，<br>
+                把心站穩。
+            </div>
         </header>
 
-        <div id="intro-card" class="intro-card">
-            嘿，歡迎回來。<br>
-            這裡是一個可以讓你暫停 30 秒的小空間。<br>
-            當你覺得心裡亂亂的、或者被誤解的時候，<br>
-            選一個適合的對象，我們一起練習把心站穩。
-        </div>
-
         <div class="menu-grid">
-            <button class="nav-btn" onclick="start('kids')"><span>🎨</span>小小孩</button>
-            <button class="nav-btn" onclick="start('primary')"><span>🎒</span>孩子們</button>
-            <button class="nav-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
-            <button class="nav-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
+            <button class="nav-btn" onclick="start('kids')"><span>🎨</span> 小小孩</button>
+            <button class="nav-btn" onclick="start('primary')"><span>🎒</span> 孩子們</button>
+            <button class="nav-btn" onclick="start('teen')"><span>🎧</span> 青少年</button>
+            <button class="nav-btn" onclick="start('adult')"><span>🌿</span> 給自己</button>
         </div>
     </div>
 
     <div id="content-page">
         <div class="breath-light"></div>
-        <div id="exercise-step" class="step-card"></div>
-        
-        <div id="finish-area" style="display:none;">
-            <input type="text" class="reflection-input" placeholder="試著寫下一個字就好...">
-            <button class="nav-btn" style="width:100%; height:60px; margin-top:30px;" onclick="location.reload()">練習完成，心穩住了</button>
-        </div>
-
-        <div id="next-trigger" class="footer-action" onclick="next()">
-            輕觸畫面，繼續下一小步...
-        </div>
+        <div class="step-box" id="step-box"></div>
+        <div id="next-btn" class="footer-hint" onclick="next()">— 輕觸螢幕，繼續下一小步 —</div>
+        <div id="finish-btn" class="footer-hint" style="display:none;" onclick="location.reload()">— 練習完成，回到起點 —</div>
     </div>
 </div>
 
 <script>
     const dialogs = {
-        kids: ["先閉上眼，找找看心裡現在是什麼顏色？", "想像那是一個軟綿綿的泡泡，把它放在手心。", "深呼吸，輕輕把它吹向天空吧。"],
-        primary: ["剛才那件事，是眼睛看到的，還是心裡猜的？", "試著把對方的臉，換成一顆可愛的馬鈴薯。", "重新聽聽剛才的話，感覺是不是鬆了一點？"],
-        teen: ["感覺一下，現在雙腳踩在地板上的重量。", "問問自己：我現在的焦慮，是真的嗎？", "如果是很有自信的你，會想對現在的你說什麼？"],
-        adult: ["標註這份情緒：它是屬於「現在」，還是「過去」？", "看見腦袋裡的標籤，承認它，但不被它帶走。", "對自己微笑一下，你已經做得很好了。"]
+        kids: [
+            { sense: "👀 視覺練習", text: "閉上眼，找找看心裡現在是什麼顏色？" },
+            { sense: "✋ 觸覺練習", text: "想像把這個顏色捧在手心，軟軟暖暖的。" },
+            { sense: "🌬️ 嗅覺練習", text: "聞聞看，這個顏色有什麼森林的味道嗎？" }
+        ],
+        primary: [
+            { sense: "👂 聽覺練習", text: "靜下來，聽聽看環境裡最遠的一個聲音。" },
+            { sense: "👀 視覺練習", text: "在房間裡，找出三個藍色的東西。" },
+            { sense: "🧘 穩定練習", text: "感覺你的腳趾頭用力抓著地板的力量。" }
+        ],
+        teen: [
+            { sense: "✋ 觸覺練習", text: "摸摸衣服的材質，是粗糙還是柔軟？" },
+            { sense: "👃 嗅覺練習", text: "深深吸氣，感覺涼涼的空氣進到鼻腔。" },
+            { sense: "🧠 覺察練習", text: "問問自己：我現在的安全感在哪裡？" }
+        ],
+        adult: [
+            { sense: "🌍 空間覺察", text: "標註這份情緒：它是屬於「現在」嗎？" },
+            { sense: "👂 聽覺覺察", text: "聽聽自己的呼吸，它是急促還是平緩？" },
+            { sense: "🌿 整合覺察", text: "我看見了偏見，但我選擇溫和對待。" }
+        ]
     };
 
-    let currentSet = [];
-    let idx = 0;
+    let currentSteps = [];
+    let currentIdx = 0;
 
     function start(type) {
-        currentSet = dialogs[type];
-        idx = 0;
+        currentSteps = dialogs[type];
+        currentIdx = 0;
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'block';
         showStep();
     }
 
     function showStep() {
-        document.getElementById('exercise-step').innerText = currentSet[idx];
+        const box = document.getElementById('step-box');
+        const item = currentSteps[currentIdx];
+        box.innerHTML = `
+            <div class="sense-icon">${item.sense}</div>
+            <div class="step-content">${item.text}</div>
+        `;
     }
 
     function next() {
-        if (idx < currentSet.length - 1) {
-            idx++;
+        if (currentIdx < currentSteps.length - 1) {
+            currentIdx++;
             showStep();
         } else {
-            document.getElementById('exercise-step').style.display = 'none';
-            document.getElementById('next-trigger').style.display = 'none';
-            document.getElementById('finish-area').style.display = 'block';
+            document.getElementById('step-box').innerHTML = `
+                <div class="sense-icon">✨ 練習達成</div>
+                <div class="step-content" style="font-size:1.1rem; opacity:0.8;">謝謝你，陪自己走了這段路。<br>現在，我們更有力量面對世界了。</div>
+            `;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
         }
     }
-</script>
 
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
+    }
+</script>
 </body>
 </html>
