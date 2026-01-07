@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Angel-偏見覺察</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#B99B6B">
     <style>
         :root {
             --bg-start: #F9F5F0;
@@ -28,134 +27,148 @@
             justify-content: center;
             min-height: 100vh;
             line-height: 1.8;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        .container { width: 100%; max-width: 480px; padding: 40px 25px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+        .container { width: 100%; max-width: 480px; padding: 40px 25px; display: flex; flex-direction: column; align-items: center; }
 
-        header { text-align: center; margin-top: 20px; }
-        h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; margin-bottom: 10px; opacity: 0.9; }
+        /* 說明頁排版 */
+        .page { width: 100%; animation: fadeIn 0.8s ease; display: none; }
+        #intro-page { display: block; }
+
+        h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; text-align: center; margin-bottom: 30px; }
         
-        .intro-text {
+        .description-card {
+            background: var(--white);
+            padding: 30px 25px;
+            border-radius: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(93, 82, 69, 0.05);
             text-align: center;
-            font-size: 1.05rem;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-            word-break: keep-all;
-            opacity: 0.8;
         }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+        .desc-title { font-weight: bold; margin-bottom: 10px; color: var(--accent-soft); display: block; }
+        .desc-text { font-size: 1rem; margin-bottom: 20px; letter-spacing: 1px; }
+
+        /* 引導語分行排版 */
+        .guide-line { display: block; margin-bottom: 8px; }
+
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         
         .nav-btn {
             background: var(--white);
-            border: 1px solid rgba(255,255,255,0.5);
-            height: 150px;
-            border-radius: 30px;
+            border: none;
+            height: 140px;
+            border-radius: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--text-main);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(93, 82, 69, 0.05);
-            transition: transform 0.2s;
         }
-        .nav-btn:active { transform: scale(0.96); }
-        .nav-btn span { font-size: 2.5rem; margin-bottom: 12px; }
 
-        /* 練習模式介面 */
-        #content-page { display: none; width: 100%; text-align: center; animation: fadeIn 0.8s ease; }
-        
+        /* 練習內容 */
         .breath-light {
-            width: 140px; height: 140px; background: radial-gradient(circle, #F2D388 0%, transparent 75%);
-            margin: 20px auto; border-radius: 50%; filter: blur(12px);
+            width: 120px; height: 120px; background: radial-gradient(circle, #F2D388 0%, transparent 75%);
+            margin: 40px auto; border-radius: 50%; filter: blur(12px);
             animation: breathe 6s ease-in-out infinite;
         }
+        @keyframes breathe { 0%, 100% { transform: scale(0.9); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
 
-        .step-box {
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0 10px;
-        }
+        .step-box { min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .sense-tag { font-size: 0.8rem; color: var(--accent-soft); letter-spacing: 3px; margin-bottom: 20px; font-weight: bold; }
+        .step-text { font-size: 1.3rem; letter-spacing: 1.5px; padding: 0 10px; }
 
-        .sense-icon { font-size: 0.9rem; color: var(--accent-soft); margin-bottom: 20px; letter-spacing: 3px; font-weight: bold; }
-        .step-content { font-size: 1.4rem; letter-spacing: 1.5px; text-align: center; word-break: keep-all; }
+        .footer-action { margin-top: 40px; font-size: 0.9rem; opacity: 0.5; cursor: pointer; text-align: center; width: 100%; }
 
-        @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .footer-hint { margin-bottom: 30px; font-size: 0.9rem; opacity: 0.6; letter-spacing: 1px; cursor: pointer; border-bottom: 1px solid transparent; }
-        .footer-hint:hover { border-bottom: 1px solid var(--accent-soft); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="home-page" style="width: 100%;">
-        <header>
-            <h1>Angel</h1>
-            <div class="intro-text">
-                生活偶爾會起風，<br>
-                我們在這裡一起，<br>
-                把心站穩。
+    <div id="intro-page" class="page">
+        <h1>Angel</h1>
+        <div class="description-card">
+            <span class="desc-title">何時使用？</span>
+            <div class="desc-text">
+                <span class="guide-line">當感覺被誤解、或想發火時，</span>
+                <span class="guide-line">在心跳加速的衝突瞬間。</span>
             </div>
-        </header>
+            
+            <span class="desc-title">使用目標</span>
+            <div class="desc-text">
+                <span class="guide-line">不為了爭對錯，</span>
+                <span class="guide-line">只為了還給自己，一份清澈的穩定。</span>
+            </div>
+        </div>
+        <button class="nav-btn" style="width:100%; height:70px; font-weight:bold;" onclick="showPage('home-page')">進入空間</button>
+    </div>
 
+    <div id="home-page" class="page">
+        <h1>選擇對象</h1>
+        <div class="intro-text" style="text-align: center; margin-bottom: 30px; opacity:0.7;">
+            <span class="guide-line">選一個當下的身分，</span>
+            <span class="guide-line">開始 30 秒的穩定練習。</span>
+        </div>
         <div class="menu-grid">
             <button class="nav-btn" onclick="start('kids')"><span>🎨</span> 小小孩</button>
             <button class="nav-btn" onclick="start('primary')"><span>🎒</span> 孩子們</button>
             <button class="nav-btn" onclick="start('teen')"><span>🎧</span> 青少年</button>
             <button class="nav-btn" onclick="start('adult')"><span>🌿</span> 給自己</button>
         </div>
+        <div class="footer-action" onclick="showPage('intro-page')">回說明頁</div>
     </div>
 
-    <div id="content-page">
+    <div id="content-page" class="page">
         <div class="breath-light"></div>
         <div class="step-box" id="step-box"></div>
-        <div id="next-btn" class="footer-hint" onclick="next()">— 輕觸螢幕，繼續下一小步 —</div>
-        <div id="finish-btn" class="footer-hint" style="display:none;" onclick="location.reload()">— 練習完成，回到起點 —</div>
+        <div id="next-btn" class="footer-action" onclick="next()">— 輕觸螢幕，繼續下一小步 —</div>
+        <div id="finish-btn" class="footer-action" style="display:none;" onclick="location.reload()">— 練習完成，回到起點 —</div>
     </div>
 </div>
 
 <script>
     const dialogs = {
         kids: [
-            { sense: "👀 視覺練習", text: "閉上眼，找找看心裡現在是什麼顏色？" },
-            { sense: "✋ 觸覺練習", text: "想像把這個顏色捧在手心，軟軟暖暖的。" },
-            { sense: "🌬️ 嗅覺練習", text: "聞聞看，這個顏色有什麼森林的味道嗎？" }
+            { sense: "👀 視覺", text: "<span class='guide-line'>閉上眼，感受一下</span><span class='guide-line'>心裡現在是什麼顏色？</span>" },
+            { sense: "✋ 觸覺", text: "<span class='guide-line'>想像把顏色捧在手心</span><span class='guide-line'>它是軟綿綿的泡泡嗎？</span>" },
+            { sense: "🌬️ 嗅覺", text: "<span class='guide-line'>輕輕地吹一口氣</span><span class='guide-line'>讓顏色飄向遠方。</span>" }
         ],
         primary: [
-            { sense: "👂 聽覺練習", text: "靜下來，聽聽看環境裡最遠的一個聲音。" },
-            { sense: "👀 視覺練習", text: "在房間裡，找出三個藍色的東西。" },
-            { sense: "🧘 穩定練習", text: "感覺你的腳趾頭用力抓著地板的力量。" }
+            { sense: "👂 聽覺", text: "<span class='guide-line'>靜下來，聽聽看</span><span class='guide-line'>環境裡最遠的一個聲音。</span>" },
+            { sense: "👀 視覺", text: "<span class='guide-line'>找找看房間裡</span><span class='guide-line'>三個藍色的東西。</span>" },
+            { sense: "🧘 穩定", text: "<span class='guide-line'>感覺你的腳趾頭</span><span class='guide-line'>用力抓著地板的力量。</span>" }
         ],
         teen: [
-            { sense: "✋ 觸覺練習", text: "摸摸衣服的材質，是粗糙還是柔軟？" },
-            { sense: "👃 嗅覺練習", text: "深深吸氣，感覺涼涼的空氣進到鼻腔。" },
-            { sense: "🧠 覺察練習", text: "問問自己：我現在的安全感在哪裡？" }
+            { sense: "✋ 觸覺", text: "<span class='guide-line'>摸摸衣服的材質</span><span class='guide-line'>是粗糙還是柔軟？</span>" },
+            { sense: "👃 嗅覺", text: "<span class='guide-line'>深深吸氣，感覺</span><span class='guide-line'>涼涼的空氣進到鼻腔。</span>" },
+            { sense: "🧠 覺察", text: "<span class='guide-line'>問問心裡的自己：</span><span class='guide-line'>我現在的安全感在哪裡？</span>" }
         ],
         adult: [
-            { sense: "🌍 空間覺察", text: "標註這份情緒：它是屬於「現在」嗎？" },
-            { sense: "👂 聽覺覺察", text: "聽聽自己的呼吸，它是急促還是平緩？" },
-            { sense: "🌿 整合覺察", text: "我看見了偏見，但我選擇溫和對待。" }
+            { sense: "🌍 空間", text: "<span class='guide-line'>標註這份情緒：</span><span class='guide-line'>它是屬於「現在」嗎？</span>" },
+            { sense: "👂 聽覺", text: "<span class='guide-line'>聽聽自己的呼吸</span><span class='guide-line'>它是急促還是平緩？</span>" },
+            { sense: "🌿 整合", text: "<span class='guide-line'>我看見了偏見存在</span><span class='guide-line'>但我選擇，溫和地對待。</span>" }
         ]
     };
 
     let currentSteps = [];
     let currentIdx = 0;
 
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById(pageId).style.display = 'block';
+    }
+
     function start(type) {
         currentSteps = dialogs[type];
         currentIdx = 0;
-        document.getElementById('home-page').style.display = 'none';
-        document.getElementById('content-page').style.display = 'block';
+        showPage('content-page');
         showStep();
     }
 
@@ -163,8 +176,8 @@
         const box = document.getElementById('step-box');
         const item = currentSteps[currentIdx];
         box.innerHTML = `
-            <div class="sense-icon">${item.sense}</div>
-            <div class="step-content">${item.text}</div>
+            <div class="sense-tag">${item.sense}</div>
+            <div class="step-text">${item.text}</div>
         `;
     }
 
@@ -174,16 +187,14 @@
             showStep();
         } else {
             document.getElementById('step-box').innerHTML = `
-                <div class="sense-icon">✨ 練習達成</div>
-                <div class="step-content" style="font-size:1.1rem; opacity:0.8;">謝謝你，陪自己走了這段路。<br>現在，我們更有力量面對世界了。</div>
-            `;
+                <div class="sense-tag">✨ 練習達成</div>
+                <div class="step-text" style="font-size:1.1rem; opacity:0.8;">
+                    <span class="guide-line">謝謝你，陪自己走了這段路。</span>
+                    <span class="guide-line">現在，我們更有力量了。</span>
+                </div>`;
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
         }
-    }
-
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
     }
 </script>
 </body>
