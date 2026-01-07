@@ -2,133 +2,165 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Angel-偏見覺察</title>
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#B99B6B">
     <style>
         :root {
+            /* 強制淺色模式，防止被系統自動反轉為黑色 */
+            color-scheme: light; 
             --bg-start: #F9F5F0;
             --bg-end: #F2E9E1;
             --text-main: #5D5245;
             --accent-soft: #B99B6B;
-            --white: rgba(255, 255, 255, 0.9);
+            --white: rgba(255, 255, 255, 0.98);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
         body {
             margin: 0;
             font-family: "PingFang TC", "Noto Sans TC", sans-serif;
-            background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--text-main);
+            /* 解決底部被切到的關鍵：使用 dvh */
+            height: 100dvh; 
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-end)) !important;
+            color: var(--text-main) !important;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
-            line-height: 1.8;
-            overflow-x: hidden;
+            overflow: hidden; /* 防止出現多餘捲軸 */
         }
 
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .container { 
+            width: 100%; 
+            max-width: 480px; 
+            height: 100dvh; 
+            padding: 20px 25px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: space-between; /* 均勻分佈內容 */
+            padding-bottom: calc(env(safe-area-inset-bottom) + 20px); 
+        }
 
-        .container { width: 100%; max-width: 480px; padding: 40px 25px; display: flex; flex-direction: column; align-items: center; }
-
-        /* 說明頁排版 */
-        .page { width: 100%; animation: fadeIn 0.8s ease; display: none; }
-        #intro-page { display: block; }
-
-        h1 { font-weight: 300; font-size: 1.8rem; letter-spacing: 6px; text-align: center; margin-bottom: 30px; }
+        /* 標題區 */
+        header { 
+            text-align: center; 
+            margin-top: 5dvh; 
+        }
+        h1 { 
+            font-weight: 300; 
+            font-size: 1.8rem; 
+            letter-spacing: 6px; 
+            margin: 0 0 10px 0; 
+        }
         
+        .intro-text {
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            word-break: keep-all;
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* 說明卡片 */
         .description-card {
             background: var(--white);
-            padding: 30px 25px;
-            border-radius: 30px;
-            margin-bottom: 35px;
+            padding: 20px;
+            border-radius: 25px;
+            width: 100%;
             box-shadow: 0 10px 30px rgba(93, 82, 69, 0.05);
             text-align: center;
+            margin: 15px 0;
         }
+        .desc-title { font-weight: bold; color: var(--accent-soft); font-size: 0.9rem; letter-spacing: 2px; }
 
-        .desc-title { font-weight: bold; margin-bottom: 10px; color: var(--accent-soft); display: block; }
-        .desc-text { font-size: 1rem; margin-bottom: 20px; letter-spacing: 1px; }
-
-        /* 引導語分行排版 */
-        .guide-line { display: block; margin-bottom: 8px; }
-
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        /* 選單網格：縮小間距以適應螢幕高度 */
+        .menu-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            width: 100%; 
+            margin-bottom: 10px;
+        }
         
         .nav-btn {
-            background: var(--white);
-            border: none;
-            height: 140px;
+            background: var(--white) !important;
+            border: 1px solid rgba(185, 155, 107, 0.15);
+            aspect-ratio: 1 / 1.1; /* 讓按鈕隨寬度自動縮放高度 */
             border-radius: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-size: 1.1rem;
-            color: var(--text-main);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            color: var(--text-main) !important;
+            box-shadow: 0 8px 20px rgba(93, 82, 69, 0.08);
             cursor: pointer;
+            transition: transform 0.2s;
         }
+        .nav-btn:active { transform: scale(0.96); }
+        .nav-btn span { font-size: 2.2rem; margin-bottom: 8px; }
 
-        /* 練習內容 */
+        /* 練習頁 */
+        .page { width: 100%; animation: fadeIn 0.6s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        #intro-page { display: flex; }
+
         .breath-light {
             width: 120px; height: 120px; background: radial-gradient(circle, #F2D388 0%, transparent 75%);
-            margin: 40px auto; border-radius: 50%; filter: blur(12px);
+            margin-bottom: 30px; border-radius: 50%; filter: blur(12px);
             animation: breathe 6s ease-in-out infinite;
         }
-        @keyframes breathe { 0%, 100% { transform: scale(0.9); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
 
-        .step-box { min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .sense-tag { font-size: 0.8rem; color: var(--accent-soft); letter-spacing: 3px; margin-bottom: 20px; font-weight: bold; }
-        .step-text { font-size: 1.3rem; letter-spacing: 1.5px; padding: 0 10px; }
+        .step-box { min-height: 200px; text-align: center; }
+        .sense-tag { font-size: 0.8rem; color: var(--accent-soft); letter-spacing: 3px; margin-bottom: 15px; font-weight: bold; }
+        .guide-line { display: block; margin-bottom: 5px; }
 
-        .footer-action { margin-top: 40px; font-size: 0.9rem; opacity: 0.5; cursor: pointer; text-align: center; width: 100%; }
-
+        @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.3; } 50% { transform: scale(1.3); opacity: 0.7; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .footer-action { font-size: 0.85rem; opacity: 0.5; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div id="intro-page" class="page">
-        <h1>Angel</h1>
+        <header><h1>Angel</h1></header>
         <div class="description-card">
-            <span class="desc-title">何時使用？</span>
-            <div class="desc-text">
-                <span class="guide-line">當感覺被誤解、或想發火時，</span>
-                <span class="guide-line">在心跳加速的衝突瞬間。</span>
-            </div>
-            
-            <span class="desc-title">使用目標</span>
-            <div class="desc-text">
-                <span class="guide-line">不為了爭對錯，</span>
-                <span class="guide-line">只為了還給自己，一份清澈的穩定。</span>
-            </div>
+            <span class="desc-title">使用時機</span><br>
+            <span class="guide-line">心跳加速、感到被誤解、</span>
+            <span class="guide-line">或是情緒即將爆發的瞬間。</span>
+            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+            <span class="desc-title">練習目標</span><br>
+            <span class="guide-line">找回當下的穩定，</span>
+            <span class="guide-line">看見偏見，但不被帶走。</span>
         </div>
-        <button class="nav-btn" style="width:100%; height:70px; font-weight:bold;" onclick="showPage('home-page')">進入空間</button>
+        <button class="nav-btn" style="width:100%; height:60px; aspect-ratio: unset; font-weight:bold;" onclick="showPage('home-page')">進入空間</button>
     </div>
 
     <div id="home-page" class="page">
-        <h1>選擇對象</h1>
-        <div class="intro-text" style="text-align: center; margin-bottom: 30px; opacity:0.7;">
-            <span class="guide-line">選一個當下的身分，</span>
-            <span class="guide-line">開始 30 秒的穩定練習。</span>
+        <header><h1>Angel</h1></header>
+        <div class="intro-text">
+            <span class="guide-line">生活偶爾會起風，</span>
+            <span class="guide-line">選一個身分，把心站穩。</span>
         </div>
         <div class="menu-grid">
-            <button class="nav-btn" onclick="start('kids')"><span>🎨</span> 小小孩</button>
-            <button class="nav-btn" onclick="start('primary')"><span>🎒</span> 孩子們</button>
-            <button class="nav-btn" onclick="start('teen')"><span>🎧</span> 青少年</button>
-            <button class="nav-btn" onclick="start('adult')"><span>🌿</span> 給自己</button>
+            <button class="nav-btn" onclick="start('kids')"><span>🎨</span>小小孩</button>
+            <button class="nav-btn" onclick="start('primary')"><span>🎒</span>孩子們</button>
+            <button class="nav-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
+            <button class="nav-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
         </div>
-        <div class="footer-action" onclick="showPage('intro-page')">回說明頁</div>
+        <div class="footer-action" onclick="showPage('intro-page')">查看說明</div>
     </div>
 
     <div id="content-page" class="page">
         <div class="breath-light"></div>
         <div class="step-box" id="step-box"></div>
-        <div id="next-btn" class="footer-action" onclick="next()">— 輕觸螢幕，繼續下一小步 —</div>
+        <div id="next-btn" class="footer-action" onclick="next()">— 輕觸螢幕，繼續下一步 —</div>
         <div id="finish-btn" class="footer-action" style="display:none;" onclick="location.reload()">— 練習完成，回到起點 —</div>
     </div>
 </div>
@@ -162,7 +194,8 @@
 
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-        document.getElementById(pageId).style.display = 'block';
+        const target = document.getElementById(pageId);
+        target.style.display = 'flex';
     }
 
     function start(type) {
@@ -195,6 +228,10 @@
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
         }
+    }
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
     }
 </script>
 </body>
