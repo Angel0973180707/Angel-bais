@@ -1,7 +1,7 @@
 {
   "name": "Angel-偏見覺察",
   "short_name": "Angel",
-  "description": "一個溫柔、穩定、融合五感的覺察空間。",
+  "description": "在衝突瞬間，還給自己一份清澈的穩定。",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
