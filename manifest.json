@@ -1,7 +1,7 @@
 {
-  "name": "Angel-偏見覺察：語音穩定版",
+  "name": "Angel-偏見覺察 (智慧版)",
   "short_name": "Angel",
-  "description": "融合五感與 AI 語音導引的衝突當下穩定工具。",
+  "description": "具備智慧隨機引導語與語音控制的穩定空間。",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
