@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>偏見覺察 | 30秒穩定練習</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --bg-color: #FDFCF8;
+            --text-color: #4A4A4A;
+            --accent-color: #9DB2BF;
+            --btn-hover: #DDE6ED;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 { font-weight: 500; margin-bottom: 30px; letter-spacing: 2px; }
+        .menu { display: grid; gap: 15px; }
+        .btn {
+            padding: 20px;
+            border: 1px solid var(--accent-color);
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+        .btn:hover { background: var(--btn-hover); }
+        .content-card {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .back-btn { margin-top: 20px; color: #888; cursor: pointer; text-decoration: underline; }
+        .step { margin-bottom: 20px; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="main-menu">
+        <h1>偏見覺察</h1>
+        <p style="margin-bottom: 40px; color: #888;">把心站穩，活得自在</p>
+        <div class="menu">
+            <button class="btn" onclick="showTopic('kids')">學前～低年級</button>
+            <button class="btn" onclick="showTopic('primary')">國小中高年級</button>
+            <button class="btn" onclick="showTopic('teen')">青少年</button>
+            <button class="btn" onclick="showTopic('adult')">成人覺察版</button>
+        </div>
+    </div>
+
+    <div id="content-card" class="content-card">
+        <div id="exercise-content"></div>
+        <div class="back-btn" onclick="goBack()">返回選單</div>
+    </div>
+</div>
+
+<script>
+    const data = {
+        kids: {
+            title: "情緒小怪獸",
+            steps: ["1. 閉上眼，感受現在心裡的顏色。", "2. 想像那是一個彩色的泡泡。", "3. 用力吸氣，輕輕把它吹走。"]
+        },
+        primary: {
+            title: "反應偵探",
+            steps: ["1. 剛才發生的事，是事實還是感覺？", "2. 把對方的臉想像成一顆馬鈴薯。", "3. 現在，你還覺得他在生氣嗎？"]
+        },
+        teen: {
+            title: "濾鏡拆解",
+            steps: ["1. 暫停 10 秒，深吸一口氣。", "2. 問自己：這是偏見還是現實？", "3. 換一個更有自信的視角看看。"]
+        },
+        adult: {
+            title: "世界觀檢查",
+            steps: ["1. 覺察：這份情緒有多少來自過去？", "2. 標註：我在用哪種刻板印象看他？", "3. 穩定：接受偏見存在，但不被它驅使。"]
+        }
+    };
+
+    function showTopic(id) {
+        document.getElementById('main-menu').style.display = 'none';
+        const card = document.getElementById('content-card');
+        const content = document.getElementById('exercise-content');
+        card.style.display = 'block';
+        
+        let html = `<h2>${data[id].title}</h2>`;
+        data[id].steps.forEach(s => html += `<p class="step">${s}</p>`);
+        content.innerHTML = html;
+    }
+
+    function goBack() {
+        document.getElementById('main-menu').style.display = 'block';
+        document.getElementById('content-card').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
