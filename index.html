@@ -3,114 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>偏見覺察 | 30秒穩定練習</title>
+    <title>Angel-偏見覺察</title>
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
-            --bg-color: #FDFCF8;
-            --text-color: #4A4A4A;
-            --accent-color: #9DB2BF;
-            --btn-hover: #DDE6ED;
+            --bg-main: #FDFCF8;
+            --text-dark: #37474F;
+            --accent-kids: #FFD8CC;
+            --accent-primary: #E2F0CB;
+            --accent-teen: #C5E1A5;
+            --accent-adult: #B0BEC5;
+            --white: #FFFFFF;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: -apple-system, "Noto Sans TC", sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            line-height: 1.6;
+            transition: background-color 0.5s;
         }
-        .container {
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            padding: 20px;
+
+        .container { width: 100%; max-width: 450px; padding: 25px; display: flex; flex-direction: column; }
+        h1 { font-weight: 600; font-size: 1.5rem; text-align: center; margin-top: 40px; }
+        .slogan { text-align: center; color: #888; font-size: 0.9rem; margin-bottom: 30px; }
+
+        /* 使用說明頁與語錄 */
+        .intro-box { background: var(--white); padding: 25px; border-radius: 20px; line-height: 1.8; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+        .quote-box { font-style: italic; color: #666; text-align: center; margin: 20px 0; min-height: 3rem; font-size: 0.95rem; }
+
+        /* 選單按鈕 */
+        .menu-grid { display: grid; gap: 15px; }
+        .btn { padding: 22px; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 500; cursor: pointer; transition: 0.2s; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+        .btn:active { transform: scale(0.98); }
+        .btn-kids { background-color: var(--accent-kids); }
+        .btn-primary { background-color: var(--accent-primary); }
+        .btn-teen { background-color: var(--accent-teen); }
+        .btn-adult { background-color: var(--accent-adult); color: white; }
+
+        /* 內容與呼吸練習 */
+        #content-page { display: none; text-align: center; animation: fadeIn 0.6s; }
+        .card { background: white; padding: 30px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .step-text { font-size: 1.2rem; margin-bottom: 20px; line-height: 1.6; display: none; }
+        .step-text.active { display: block; animation: fadeIn 0.5s; }
+        
+        /* 呼吸圓圈 */
+        .breath-circle {
+            width: 80px; height: 80px; background: var(--accent-adult); border-radius: 50%;
+            margin: 30px auto; opacity: 0.4;
+            animation: breathing 4s ease-in-out infinite;
         }
-        h1 { font-weight: 500; margin-bottom: 30px; letter-spacing: 2px; }
-        .menu { display: grid; gap: 15px; }
-        .btn {
-            padding: 20px;
-            border: 1px solid var(--accent-color);
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1.1rem;
-            color: var(--text-color);
-        }
-        .btn:hover { background: var(--btn-hover); }
-        .content-card {
-            display: none;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            animation: fadeIn 0.5s;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .back-btn { margin-top: 20px; color: #888; cursor: pointer; text-decoration: underline; }
-        .step { margin-bottom: 20px; font-size: 1.2rem; }
+        @keyframes breathing { 0%, 100% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.6); opacity: 0.5; } }
+
+        /* 心靈留白 */
+        #reflection-area { display: none; margin-top: 20px; }
+        .input-blank { width: 100%; border: none; border-bottom: 1px solid #ccc; background: transparent; text-align: center; padding: 10px; font-size: 1.1rem; outline: none; margin-bottom: 20px; }
+        
+        .nav-link { margin-top: 30px; color: #999; cursor: pointer; text-decoration: underline; font-size: 0.9rem; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="main-menu">
-        <h1>偏見覺察</h1>
-        <p style="margin-bottom: 40px; color: #888;">把心站穩，活得自在</p>
-        <div class="menu">
-            <button class="btn" onclick="showTopic('kids')">學前～低年級</button>
-            <button class="btn" onclick="showTopic('primary')">國小中高年級</button>
-            <button class="btn" onclick="showTopic('teen')">青少年</button>
-            <button class="btn" onclick="showTopic('adult')">成人覺察版</button>
+    <div id="intro-page">
+        <h1>Angel-偏見覺察</h1>
+        <p class="slogan">把心站穩，活得自在</p>
+        <div id="quote-display" class="quote-box"></div>
+        <div class="intro-box">
+            這是一個專門為「情緒衝突」當下設計的 30 秒穩定練習。請按照導引，安靜地完成動作，感受心境的轉變。
+        </div>
+        <button class="btn btn-adult" style="width:100%; text-align:center;" onclick="initHome()">開始練習</button>
+    </div>
+
+    <div id="main-menu" style="display:none;">
+        <h1>選擇對象</h1>
+        <p class="slogan">選擇當下最適合的切入點</p>
+        <div class="menu-grid">
+            <button class="btn btn-kids" onclick="showContent('kids')">學前～低年級 <span>👶</span></button>
+            <button class="btn btn-primary" onclick="showContent('primary')">國小中高年級 <span>🎒</span></button>
+            <button class="btn btn-teen" onclick="showContent('teen')">青少年 <span>🎧</span></button>
+            <button class="btn btn-adult" onclick="showContent('adult')">成人版 <span>🌿</span></button>
         </div>
     </div>
 
-    <div id="content-card" class="content-card">
-        <div id="exercise-content"></div>
-        <div class="back-btn" onclick="goBack()">返回選單</div>
+    <div id="content-page">
+        <div class="breath-circle"></div>
+        <div class="card" id="card-content"></div>
+        <div id="reflection-area">
+            <p style="color:#888;">練習結束。如果有想對自己說的話，請寫在這裡（不儲存）：</p>
+            <input type="text" class="input-blank" placeholder="此刻的心情是？">
+            <button class="btn btn-adult" style="width:100%; text-align:center;" onclick="goHome()">練習完成</button>
+        </div>
+        <p id="next-step-btn" class="nav-link" onclick="nextStep()">點擊畫面進入下一步</p>
     </div>
 </div>
 
 <script>
-    const data = {
-        kids: {
-            title: "情緒小怪獸",
-            steps: ["1. 閉上眼，感受現在心裡的顏色。", "2. 想像那是一個彩色的泡泡。", "3. 用力吸氣，輕輕把它吹走。"]
-        },
-        primary: {
-            title: "反應偵探",
-            steps: ["1. 剛才發生的事，是事實還是感覺？", "2. 把對方的臉想像成一顆馬鈴薯。", "3. 現在，你還覺得他在生氣嗎？"]
-        },
-        teen: {
-            title: "濾鏡拆解",
-            steps: ["1. 暫停 10 秒，深吸一口氣。", "2. 問自己：這是偏見還是現實？", "3. 換一個更有自信的視角看看。"]
-        },
-        adult: {
-            title: "世界觀檢查",
-            steps: ["1. 覺察：這份情緒有多少來自過去？", "2. 標註：我在用哪種刻板印象看他？", "3. 穩定：接受偏見存在，但不被它驅使。"]
-        }
+    const quotes = [
+        "「看見偏見，就是溫柔的開始。」",
+        "「你不需要立刻完美，只需要此刻穩定。」",
+        "「呼吸在哪裡，心就在哪裡。」",
+        "「暫停一下，是為了走更遠的路。」"
+    ];
+
+    const config = {
+        kids: { steps: ["閉上眼，感受現在心裡的顏色。", "想像那是一個彩色的泡泡。", "輕輕吹一口氣，讓泡泡飄走。"] },
+        primary: { steps: ["剛才的事，是事實還是感覺？", "把對方的臉換成一顆馬鈴薯。", "重新聽一次，感覺有什麼不同？"] },
+        teen: { steps: ["暫停 10 秒，感覺腳掌踩在地板上。", "問自己：這是我以為的，還是真的？", "選擇一個更有力量的視角。"] },
+        adult: { steps: ["標註這份情緒：它是屬於當下的嗎？", "覺察：我正在被哪種刻板印象驅使？", "穩住：我看見了偏見，但我選擇溫和。"] }
     };
 
-    function showTopic(id) {
-        document.getElementById('main-menu').style.display = 'none';
-        const card = document.getElementById('content-card');
-        const content = document.getElementById('exercise-content');
-        card.style.display = 'block';
-        
-        let html = `<h2>${data[id].title}</h2>`;
-        data[id].steps.forEach(s => html += `<p class="step">${s}</p>`);
-        content.innerHTML = html;
+    let currentStep = 0;
+    let currentData = [];
+
+    function initHome() {
+        document.getElementById('quote-display').innerText = quotes[Math.floor(Math.random() * quotes.length)];
+        showPage('main-menu');
     }
 
-    function goBack() {
-        document.getElementById('main-menu').style.display = 'block';
-        document.getElementById('content-card').style.display = 'none';
+    function showPage(pageId) {
+        document.body.style.backgroundColor = (pageId === 'content-page') ? '#ECEFF1' : '#FDFCF8';
+        ['intro-page', 'main-menu', 'content-page'].forEach(id => {
+            document.getElementById(id).style.display = (id === pageId) ? 'block' : 'none';
+        });
+    }
+
+    function showContent(id) {
+        currentData = config[id].steps;
+        currentStep = 0;
+        document.getElementById('reflection-area').style.display = 'none';
+        document.getElementById('next-step-btn').style.display = 'block';
+        updateStep();
+        showPage('content-page');
+    }
+
+    function updateStep() {
+        const card = document.getElementById('card-content');
+        card.innerHTML = `<p class="step-text active">${currentData[currentStep]}</p>`;
+    }
+
+    function nextStep() {
+        if (currentStep < currentData.length - 1) {
+            currentStep++;
+            updateStep();
+        } else {
+            document.getElementById('card-content').innerHTML = "<h2>練習已達成</h2>";
+            document.getElementById('next-step-btn').style.display = 'none';
+            document.getElementById('reflection-area').style.display = 'block';
+        }
+    }
+
+    function goHome() { showPage('intro-page'); }
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); });
     }
 </script>
-
 </body>
 </html>
