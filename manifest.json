@@ -1,15 +1,18 @@
 {
-  "name": "Angel-偏見覺察",
+  "name": "Angel-偏見覺察：30秒穩定練習",
   "short_name": "偏見覺察",
+  "description": "跨年齡層的情緒誤讀與衝突當下穩定練習工具。",
   "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#FDFCF8",
-  "theme_color": "#9DB2BF",
+  "theme_color": "#B0BEC5",
   "icons": [
     {
       "src": "icon.png",
       "sizes": "192x192 512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
