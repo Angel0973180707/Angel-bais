@@ -11,69 +11,62 @@
         body { 
             margin: 0; font-family: -apple-system, "PingFang TC", sans-serif; 
             height: 100dvh; background: var(--bg); color: var(--light); 
-            display: flex; justify-content: center; overflow: hidden; 
+            display: flex; justify-content: center; overflow: hidden;
         }
 
         .container { 
-            width: 100%; max-width: 400px; height: 100%; 
-            padding: 15px 20px; display: flex; flex-direction: column; 
-            justify-content: space-between; /* 確保內容從頂部到底部平均分布 */
+            width: 100%; max-width: 400px; 
+            height: 100dvh; /* 使用動態高度 */
+            padding: 10px 20px; display: flex; flex-direction: column; 
+            justify-content: space-between; /* 均勻分布撐開 */
         }
         
-        header h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 12px; color: var(--gold); margin: 5px 0; text-align: center; padding-left: 12px; }
+        header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 10px; color: var(--gold); margin: 5px 0; text-align: center; padding-left: 10px; }
 
-        /* 金句區：固定兩行排版 */
         .intro-box { 
-            background: var(--glass); padding: 20px; border-radius: 24px; 
+            background: var(--glass); padding: 15px; border-radius: 20px; 
             text-align: center; border: 1px solid rgba(255,255,255,0.08);
-            min-height: 130px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .usage-tag { font-size: 0.75rem; color: var(--gold); opacity: 0.8; letter-spacing: 2px; margin-bottom: 10px; }
-        .quote-text { 
-            font-size: 1.1rem; line-height: 1.6; letter-spacing: 1.5px; font-style: italic;
-            max-width: 260px; /* 限制寬度強迫文字排成整齊的兩行 */
-            word-break: keep-all;
-        }
+        .usage-tag { font-size: 0.7rem; color: var(--gold); opacity: 0.8; letter-spacing: 2px; margin-bottom: 5px; }
+        .quote-text { font-size: 1rem; line-height: 1.5; letter-spacing: 1px; font-style: italic; max-width: 240px; }
 
-        .label { font-size: 0.75rem; opacity: 0.6; margin: 10px 0 5px 5px; letter-spacing: 1.5px; }
+        .label { font-size: 0.7rem; opacity: 0.6; margin: 5px 0 3px 5px; letter-spacing: 1px; }
 
-        /* 選項列 */
         .row { 
             width: 100%; background: var(--glass); border-radius: 50px; 
-            padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 3px; display: flex; border: 1px solid rgba(255,255,255,0.1); 
         }
         .opt { 
-            flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; 
-            opacity: 0.4; padding: 12px 0; border-radius: 40px; transition: 0.3s; 
+            flex: 1; text-align: center; font-size: 0.8rem; cursor: pointer; 
+            opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; 
         }
         .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
 
-        /* 底部按鈕：平均分布網格 */
+        /* 底部 2x2 按鈕區：關鍵修正 */
         .grid { 
             display: grid; grid-template-columns: 1fr 1fr; 
-            gap: 12px; margin-bottom: 10px;
+            gap: 10px; margin-bottom: 5px;
         }
         .btn { 
             background: var(--glass); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 22px; padding: 15px 10px; text-align: center; 
-            cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px;
+            border-radius: 20px; padding: 12px 5px; text-align: center; 
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
         }
-        .btn span { font-size: 2rem; }
-        .btn p { margin: 0; font-size: 0.95rem; letter-spacing: 1px; }
+        .btn span { font-size: 1.8rem; }
+        .btn p { margin: 0; font-size: 0.85rem; letter-spacing: 1px; }
+
+        .footer { font-size: 0.65rem; opacity: 0.3; text-align: center; padding-bottom: 8px; }
 
         /* 練習畫面 */
         .page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .breath-circle { 
-            width: 130px; height: 130px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); 
+            width: 110px; height: 110px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); 
             border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            animation: b 4s infinite; margin-bottom: 40px; 
+            animation: b 4s infinite; margin-bottom: 30px; 
         }
-        #timer { font-size: 2.5rem; font-weight: 200; }
-        .step-box { width: 80%; min-height: 150px; }
-        .step-text { font-size: 1.5rem; line-height: 1.6; max-width: 240px; margin: 0 auto; }
-
-        .footer { font-size: 0.7rem; opacity: 0.4; text-align: center; padding-bottom: 10px; }
-
+        #timer { font-size: 2.2rem; font-weight: 200; }
+        .step-box { width: 85%; min-height: 140px; }
         @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.3;} 50% {transform: scale(1.1); opacity: 0.6;} }
     </style>
 </head>
@@ -85,7 +78,7 @@
 
         <div class="intro-box">
             <span class="usage-tag">使用時機：感到煩躁或偏見時</span>
-            <div id="random-quote" class="quote-text">每一次呼吸，都是一個<br>重新開始的機會。</div>
+            <div id="random-quote" class="quote-text"></div>
         </div>
 
         <div>
@@ -96,7 +89,7 @@
                 <div id="t-30" class="opt" onclick="setCfg('t',30)">30秒</div>
             </div>
             
-            <div class="label" style="margin-top:15px;">語音導引提示</div>
+            <div class="label" style="margin-top:10px;">語音導引提示</div>
             <div class="row" id="v-row">
                 <div id="v-on" class="opt active" onclick="setCfg('v','on')">開啟</div>
                 <div id="v-off" class="opt" onclick="setCfg('v','off')">關閉</div>
@@ -162,13 +155,13 @@
         const run = () => {
             if (idx >= steps.length) { 
                 document.getElementById('step-box').innerHTML = "<div style='font-size:1.4rem;'>練習完成 ✨<br><br>帶著平靜回到生活。</div>";
-                setTimeout(() => location.reload(), 4000);
+                setTimeout(() => location.reload(), 3000);
                 return; 
             }
             const item = steps[idx];
             document.getElementById('step-box').innerHTML = `
-                <div style="color:var(--gold); margin-bottom:20px; font-size:1rem; letter-spacing:6px; font-weight:bold;">${item.s}</div>
-                <div class="step-text">${item.t}</div>
+                <div style="color:var(--gold); margin-bottom:15px; font-size:0.9rem; letter-spacing:5px; font-weight:bold;">${item.s}</div>
+                <div style="font-size:1.4rem; line-height:1.6; max-width:240px; margin:0 auto;">${item.t}</div>
             `;
             
             if(cfg.v === 'on') {
@@ -184,7 +177,7 @@
             const t = setInterval(() => {
                 c--;
                 document.getElementById('timer').innerText = c > 0 ? c : "✨";
-                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1200); }
+                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1000); }
             }, 1000);
         };
         run();
