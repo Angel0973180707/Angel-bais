@@ -23,30 +23,28 @@
             align-items: center; justify-content: space-between; 
             padding-bottom: calc(env(safe-area-inset-bottom) + 20px); 
         }
-        .page { width: 100%; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        .page { width: 100%; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         #home-page { display: flex; justify-content: flex-start; padding-top: 20px; }
 
-        header { text-align: center; margin-bottom: 25px; }
         header h1 { font-weight: 200; font-size: 2.2rem; letter-spacing: 10px; margin: 0; color: var(--accent-gold); }
-        .intro-text { font-size: 0.9rem; opacity: 0.8; line-height: 1.8; letter-spacing: 1px; margin-top: 15px; text-align: center; }
+        .intro-text { font-size: 0.95rem; opacity: 0.85; line-height: 1.8; margin-top: 15px; letter-spacing: 1px; }
 
-        .settings-area { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .settings-area { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
         .music-selector {
             width: 100%; background: var(--card-glass); border-radius: 50px;
-            padding: 5px; display: flex; justify-content: space-between;
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 5px; display: flex; border: 1px solid rgba(255,255,255,0.1);
         }
-        .music-opt { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.5; padding: 12px 0; border-radius: 40px; transition: 0.3s; }
+        .music-opt { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.4; padding: 12px 0; border-radius: 40px; transition: 0.3s; }
         .music-opt.active { opacity: 1; background: var(--accent-gold); color: var(--bg-deep); font-weight: bold; }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-top: 20px; }
         .nav-btn {
             background: var(--card-glass); border: 1px solid rgba(255,255,255,0.15);
             border-radius: 25px; display: flex; flex-direction: column;
             justify-content: center; align-items: center; color: var(--text-light); cursor: pointer;
         }
         .menu-btn { aspect-ratio: 1 / 1; font-size: 1.1rem; letter-spacing: 2px; }
-        .menu-btn span { font-size: 2.5rem; margin-bottom: 10px; }
+        .menu-btn span { font-size: 2.5rem; margin-bottom: 8px; }
 
         .breath-area { position: relative; width: 140px; height: 140px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; }
         .breath-circle { 
@@ -56,28 +54,29 @@
         }
         #timer-display { font-size: 2.5rem; font-weight: 200; z-index: 2; }
 
-        .step-box { min-height: 180px; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 15px; font-weight: bold; }
-        .step-text { font-size: 1.35rem; line-height: 1.8; letter-spacing: 2px; }
+        .step-box { min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 6px; margin-bottom: 15px; font-weight: bold; }
+        .step-text { font-size: 1.4rem; line-height: 2; letter-spacing: 2px; }
 
         .journal-box { width: 100%; background: var(--card-glass); border-radius: 20px; padding: 15px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .journal-input { width: 100%; background: transparent; border: none; color: var(--text-light); font-size: 1rem; resize: none; outline: none; height: 70px; }
+        .journal-input { width: 100%; background: transparent; border: none; color: var(--text-light); font-size: 1rem; outline: none; height: 70px; text-align: center; }
         
-        .footer-links { font-size: 0.8rem; margin-top: 20px; opacity: 0.7; }
+        .footer-links { font-size: 0.85rem; margin-top: 25px; opacity: 0.8; }
         .footer-links a { color: var(--accent-gold); text-decoration: underline; }
 
-        @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.2; } 50% { transform: scale(1.3); opacity: 0.5; } }
+        @keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.2; } 50% { transform: scale(1.3); opacity: 0.5; } }
     </style>
 </head>
 <body>
 
-<audio id="bg-music" loop playsinline preload="auto"></audio>
+<audio id="bg-music" loop playsinline></audio>
 
 <div class="container">
     <div id="home-page" class="page" style="display:flex;">
         <header>
             <h1>Angel</h1>
             <div class="intro-text">
+                <strong>使用時機</strong><br>
                 當你感到煩躁、偏見或不安時，<br>請給自己三分鐘，重新與感官連結。
             </div>
         </header>
@@ -92,14 +91,14 @@
         </div>
 
         <div class="menu-grid">
-            <button class="nav-btn menu-btn" onclick="start('kids')"><span>🎨</span>小小孩</button>
-            <button class="nav-btn menu-btn" onclick="start('primary')"><span>🎒</span>孩子們</button>
-            <button class="nav-btn menu-btn" onclick="start('teen')"><span>🎧</span>青少年</button>
-            <button class="nav-btn menu-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
+            <button class="nav-btn menu-btn" onclick="preStart('kids')"><span>🎨</span>小小孩</button>
+            <button class="nav-btn menu-btn" onclick="preStart('primary')"><span>🎒</span>孩子們</button>
+            <button class="nav-btn menu-btn" onclick="preStart('teen')"><span>🎧</span>青少年</button>
+            <button class="nav-btn menu-btn" onclick="preStart('adult')"><span>🌿</span>給自己</button>
         </div>
         
         <div class="footer-links">
-            <a href="https://docs.google.com/forms/d/e/您的表單ID/viewform" target="_blank">📣 提供使用回饋</a>
+            <a href="https://forms.gle/XXXXXXX" target="_blank">📝 提供使用回饋表單</a>
         </div>
     </div>
 
@@ -112,9 +111,9 @@
         
         <div id="finish-area" style="display:none; width:100%;">
             <div class="journal-box">
-                <textarea class="journal-input" id="journal-text" placeholder="練習結束了，此刻的心情是... 📝✨"></textarea>
+                <textarea class="journal-input" id="journal-text" placeholder="練習結束了，寫下此刻心情... 🍃"></textarea>
             </div>
-            <button class="nav-btn" style="width:100%; height:60px; margin-top:15px; font-weight:bold; background:var(--accent-gold); color:var(--bg-deep);" onclick="location.reload()">完成練習</button>
+            <button class="nav-btn" style="width:100%; height:60px; margin-top:20px; font-weight:bold; background:var(--accent-gold); color:var(--bg-deep); border:none;" onclick="location.reload()">紀錄並結束</button>
         </div>
     </div>
 </div>
@@ -122,16 +121,16 @@
 <script>
     const musicLibrary = {
         none: "",
-        deep: "https://actions.google.com/sounds/v1/ambiences/deep_hum.ogg", 
-        relax: "https://actions.google.com/sounds/v1/ambiences/wind_in_trees.ogg", 
-        focus: "https://actions.google.com/sounds/v1/ambiences/forest_morning.ogg"
+        deep: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", // 更換為穩定的MP3
+        relax: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        focus: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
     };
 
     const pool = {
-        kids: [[{s:"👀 視覺", t:"找一個你最喜歡的顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺軟軟的。"}, {s:"🌬️ 嗅覺", t:"深呼吸，聞聞花香。"}]],
-        primary: [[{s:"👂 聽覺", t:"聽聽看，遠方有什麼聲音？"}, {s:"👀 視覺", t:"找出三個圓圓的東西。"}, {s:"🧘 穩定", t:"感覺腳掌踩在地上很穩。"}]],
-        teen: [[{s:"✋ 觸覺", t:"指尖輕輕互碰，感覺溫度。"}, {s:"🌬️ 呼吸", t:"感受空氣進到鼻腔的涼爽。"}, {s:"🧠 覺察", t:"我現在的情緒是什麼顏色？"}]],
-        adult: [[{s:"🌍 空間", t:"感覺身體被椅子支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中細微的安靜。"}, {s:"🌿 整合", t:"我允許所有的情緒暫時存在。"}]],
+        kids: [[{s:"👀 視覺", t:"看一看，找出房間裡最亮的顏色。"}, {s:"✋ 觸覺", t:"摸摸身邊的物品，感覺它是涼的嗎？"}, {s:"🌬️ 嗅覺", t:"深吸一口氣，像在聞好吃的餅乾。"}]],
+        primary: [[{s:"👂 聽覺", t:"聽聽看，你能聽到遠方的車聲嗎？"}, {s:"👀 視覺", t:"找出三個藍色的東西。"}, {s:"🧘 穩定", t:"感覺腳掌踩在地上，像樹根一樣穩。"}]],
+        teen: [[{s:"✋ 觸覺", t:"感覺衣服接觸皮膚的質地。"}, {s:"🌬️ 呼吸", t:"吸氣 4 秒，感覺肚子像氣球變大。"}, {s:"🧠 覺察", t:"如果現在的情緒有形狀，它是什麼樣？"}]],
+        adult: [[{s:"🌍 空間", t:"感覺脊椎向上延伸，撐開身體空間。"}, {s:"👂 聽覺", t:"留意房間裡，被忽視的細微背景音。"}, {s:"🌿 整合", t:"對自己說：此刻的我很安全。"}]],
     };
 
     let selectedKey = 'none';
@@ -142,24 +141,29 @@
         selectedKey = key;
         document.querySelectorAll('.music-opt').forEach(opt => opt.classList.remove('active'));
         document.getElementById(`opt-${key}`).classList.add('active');
-        const music = document.getElementById('bg-music');
-        if (key !== 'none') {
-            music.src = musicLibrary[key];
-            music.load();
+        // 點擊即試播 0.1 秒並暫停，這能「騙過」手機系統的阻擋機制
+        const m = document.getElementById('bg-music');
+        if(key !== 'none') {
+            m.src = musicLibrary[key];
+            m.play().then(() => m.pause()).catch(() => {});
         }
+    }
+
+    // 在進入練習前多做一次解鎖動作
+    function preStart(type) {
+        // 解鎖語音
+        const m = document.getElementById('bg-music');
+        if(selectedKey !== 'none') {
+            m.play().catch(() => {
+                console.log("需要使用者互動才能播放");
+            });
+        }
+        start(type);
     }
 
     function start(type) {
         const steps = pool[type][0];
         currentIdx = 0;
-        
-        // 核心解鎖：利用點擊事件強制開啟音樂與語音
-        const music = document.getElementById('bg-music');
-        if (selectedKey !== 'none') {
-            music.volume = 0.5;
-            music.play().catch(() => {});
-        }
-        
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
         runStep(steps);
@@ -176,7 +180,7 @@
         // 語音播放
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(item.t);
-        u.lang = 'zh-TW'; u.rate = 0.8;
+        u.lang = 'zh-TW'; u.rate = 0.7;
         window.speechSynthesis.speak(u);
 
         let timeLeft = 10;
@@ -188,13 +192,13 @@
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 currentIdx++;
-                setTimeout(() => runStep(steps), 1000);
+                setTimeout(() => runStep(steps), 800);
             }
         }, 1000);
     }
 
     function finish() {
-        document.getElementById('step-box').innerHTML = `<div class="sense-tag">練習達成</div><div class="step-text">謝謝你，陪自己走了這段路。<br>平靜就在你的心裡。</div>`;
+        document.getElementById('step-box').innerHTML = `<div class="sense-tag">練習達成</div><div class="step-text">平靜就在你的心裡。<br>謝謝你，陪自己走了這段路。</div>`;
         document.getElementById('finish-area').style.display = 'block';
     }
 </script>
