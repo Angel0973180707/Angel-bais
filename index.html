@@ -5,198 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Angel-偏見覺察</title>
     <style>
-        :root {
-            --bg-deep: #3D523D;
-            --text-light: #F2E9E1;
-            --accent-gold: #F2D388;
-            --card-glass: rgba(255, 255, 255, 0.1);
-        }
+        :root { --bg: #3D523D; --light: #F2E9E1; --gold: #F2D388; --glass: rgba(255, 255, 255, 0.1); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            margin: 0; font-family: -apple-system, "PingFang TC", sans-serif;
-            height: 100dvh; background-color: var(--bg-deep);
-            color: var(--text-light); display: flex; justify-content: center; overflow: hidden;
-        }
-        .container { 
-            width: 100%; max-width: 450px; height: 100%; 
-            padding: 15px 20px; display: flex; flex-direction: column; 
-            justify-content: space-between; /* 確保頂部與底部撐開 */
-        }
-        .page { width: 100%; display: none; flex-direction: column; align-items: center; }
+        body { margin: 0; font-family: -apple-system, sans-serif; height: 100dvh; background: var(--bg); color: var(--light); display: flex; justify-content: center; overflow: hidden; }
+        .container { width: 100%; max-width: 400px; height: 100%; padding: 10px 15px; display: flex; flex-direction: column; justify-content: space-between; }
         
-        /* 頁頭縮小避免擠壓 */
-        header h1 { font-weight: 200; font-size: 1.8rem; letter-spacing: 8px; color: var(--accent-gold); margin: 5px 0; }
-        .intro-text { font-size: 0.8rem; opacity: 0.7; line-height: 1.5; margin-bottom: 10px; text-align: center; }
+        header h1 { font-size: 1.5rem; letter-spacing: 5px; color: var(--gold); margin: 5px 0; text-align: center; }
+        .intro { font-size: 0.75rem; opacity: 0.7; margin-bottom: 8px; text-align: center; line-height: 1.4; }
 
-        /* 選項區緊湊化 */
-        .section-label { font-size: 0.75rem; letter-spacing: 1px; margin: 8px 0 4px; opacity: 0.6; align-self: flex-start; }
-        .option-row {
-            width: 100%; background: var(--card-glass); border-radius: 50px;
-            padding: 3px; display: flex; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .opt-item { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.4; padding: 8px 0; border-radius: 30px; transition: 0.2s; }
-        .opt-item.active { opacity: 1; background: var(--accent-gold); color: var(--bg-deep); font-weight: bold; }
+        .label { font-size: 0.7rem; opacity: 0.6; margin: 5px 0 3px; }
+        .row { width: 100%; background: var(--glass); border-radius: 20px; padding: 2px; display: flex; border: 1px solid rgba(255,255,255,0.1); }
+        .opt { flex: 1; text-align: center; font-size: 0.7rem; cursor: pointer; opacity: 0.5; padding: 8px 0; border-radius: 18px; transition: 0.2s; }
+        .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
 
-        /* 按鈕區 */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 10px; }
-        .nav-btn { background: var(--card-glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: var(--text-light); cursor: pointer; padding: 15px; }
-        .menu-btn { font-size: 0.9rem; letter-spacing: 2px; }
-        .menu-btn span { font-size: 1.8rem; display: block; margin-bottom: 3px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin: 10px 0; }
+        .btn { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: var(--light); padding: 12px; text-align: center; cursor: pointer; }
+        .btn span { font-size: 1.5rem; display: block; margin-bottom: 2px; }
+        .btn p { margin: 0; font-size: 0.85rem; }
 
-        /* 練習中頁面 */
-        .breath-circle { 
-            width: 120px; height: 120px; background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%); 
-            border-radius: 50%; filter: blur(8px); animation: breathe 8s infinite; margin: 30px 0;
-            display: flex; align-items: center; justify-content: center;
-        }
-        #timer-display { font-size: 2rem; filter: blur(0); }
-        .step-box { min-height: 140px; text-align: center; width: 100%; }
-        .step-text { font-size: 1.25rem; line-height: 1.8; letter-spacing: 1px; }
+        .footer { font-size: 0.7rem; opacity: 0.5; text-align: center; padding-bottom: 5px; }
+        .footer a { color: var(--light); text-decoration: none; }
 
-        .journal-box { width: 100%; margin-top: 10px; }
-        .journal-input { width: 100%; background: var(--card-glass); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 15px; outline: none; }
-
-        @keyframes breathe { 0%, 100% { transform: scale(0.9); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.6; } }
+        #content-page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        .circle { width: 100px; height: 100px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: b 4s infinite; margin-bottom: 20px; }
+        #timer { font-size: 1.8rem; }
+        .step-box { min-height: 120px; text-align: center; width: 100%; padding: 0 10px; }
+        @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.4;} 50% {transform: scale(1.1); opacity: 0.7;} }
     </style>
 </head>
 <body>
 
-<audio id="bg-music" loop playsinline></audio>
-<audio id="bell-sound" playsinline></audio>
+<audio id="bg-m" loop playsinline></audio>
+<audio id="be-m" playsinline></audio>
 
 <div class="container">
-    <div id="home-page" class="page" style="display: flex;">
-        <header><h1>Angel</h1><div class="intro-text">當你感到偏見或煩躁時，<br>與感官連結，找回內在平靜。</div></header>
+    <div id="home-page" style="display: flex; flex-direction: column; height: 100%;">
+        <header><h1>Angel</h1><div class="intro">當你感到煩躁時，與感官連結<br>找回內在平靜</div></header>
 
-        <div class="section-label">舒緩氛圍音</div>
-        <div class="option-row" id="music-row">
-            <div class="opt-item active" onclick="cfgSet('music','none')">寂靜</div>
-            <div class="opt-item" onclick="cfgSet('music','sea')">深海</div>
-            <div class="opt-item" onclick="cfgSet('music','wind')">微風</div>
-            <div class="opt-item" onclick="cfgSet('music','zen')">禪定</div>
+        <div class="label">氛圍音</div>
+        <div class="row" id="m-row">
+            <div class="opt active" onclick="set('m','none')">寂靜</div>
+            <div class="opt" onclick="set('m','sea')">深海</div>
+            <div class="opt" onclick="set('m','zen')">禪定</div>
         </div>
 
-        <div class="section-label">每題停留秒數</div>
-        <div class="option-row" id="time-row">
-            <div class="opt-item active" onclick="cfgSet('time',10)">10s</div>
-            <div class="opt-item" onclick="cfgSet('time',20)">20s</div>
-            <div class="opt-item" onclick="cfgSet('time',30)">30s</div>
+        <div class="label">停留秒數</div>
+        <div class="row" id="t-row">
+            <div class="opt active" onclick="set('t',10)">10s</div>
+            <div class="opt" onclick="set('t',20)">20s</div>
+            <div class="opt" onclick="set('t',30)">30s</div>
         </div>
 
-        <div class="section-label">提示音效 (換題時)</div>
-        <div class="option-row" id="bell-row">
-            <div class="opt-item active" onclick="cfgSet('bell','bowl')">頌缽</div>
-            <div class="opt-item" onclick="cfgSet('bell','chime')">木鈴</div>
-            <div class="opt-item" onclick="cfgSet('bell','mute')">無聲</div>
+        <div class="label">提示音</div>
+        <div class="row" id="b-row">
+            <div class="opt active" onclick="set('b','bowl')">頌缽</div>
+            <div class="opt" onclick="set('b','mute')">無聲</div>
         </div>
 
-        <div class="menu-grid">
-            <button class="nav-btn menu-btn" onclick="start('kids')"><span>🎨</span>小小孩</button>
-            <button class="nav-btn menu-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
+        <div class="grid">
+            <div class="btn" onclick="go('kids')"><span>🎨</span><p>小小孩</p></div>
+            <div class="btn" onclick="go('primary')"><span>🎒</span><p>孩子們</p></div>
+            <div class="btn" onclick="go('teen')"><span>🎧</span><p>青少年</p></div>
+            <div class="btn" onclick="go('adult')"><span>🌿</span><p>給自己</p></div>
         </div>
         
-        <div style="font-size: 0.7rem; margin: 15px 0 5px; opacity: 0.4; text-align: center;">
-            <a href="https://forms.gle/your-id" style="color: white; text-decoration: none;">📋 使用回饋</a>
-        </div>
+        <div class="footer"><a href="#">📋 使用回饋</a></div>
     </div>
 
     <div id="content-page" class="page">
-        <div class="breath-circle"><div id="timer-display"></div></div>
+        <div class="circle"><div id="timer"></div></div>
         <div class="step-box" id="step-box"></div>
-        <div id="journal-area" class="journal-box" style="display:none;">
-            <textarea class="journal-input" id="note" rows="3" placeholder="練習結束，此刻的心情..."></textarea>
-            <button class="nav-btn" style="width:100%; margin-top:10px; background:var(--accent-gold); color:var(--bg-deep); font-weight:bold;" onclick="location.reload()">儲存並完成</button>
-        </div>
     </div>
 </div>
 
 <script>
-    // 使用全 MP3 格式，確保 iOS 100% 相容
-    const musicLib = {
-        none: "",
-        sea: "https://assets.mixkit.co/music/preview/mixkit-deep-ocean-hum-1549.mp3", 
-        wind: "https://www.soundjay.com/nature/wind-01.mp3",
-        zen: "https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3"
-    };
-
-    const bellLib = {
-        bowl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3", // 禪意頌缽感
-        chime: "https://www.soundjay.com/misc/sounds/magic-chime-01.mp3",
-        mute: ""
-    };
-
+    const mLib = { none: "", sea: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", zen: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" };
+    const bLib = { bowl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3", mute: "" };
     const pool = {
-        kids: [{s:"👀 視覺", t:"看看窗外，找一個綠色的東西。"}, {s:"✋ 觸覺", t:"摸摸自己的手心，是暖暖的嗎？"}, {s:"🌬️ 嗅覺", t:"深呼吸，聞聞空氣的味道。"}],
-        adult: [{s:"🌍 空間", t:"感覺身體被椅子支撐的力量。"}, {s:"👂 聽覺", t:"留意房間內最微弱的聲音。"}, {s:"🌿 整合", t:"對自己說：我現在很安全。"}]
+        kids: [{s:"👀 視覺", t:"找一個你最喜歡的顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺軟軟的。"}],
+        primary: [{s:"👂 聽覺", t:"聽聽看，遠方有什麼聲音？"}, {s:"👀 視覺", t:"找出三個圓圓的東西。"}],
+        teen: [{s:"✋ 觸覺", t:"感覺雙手合十的溫度。"}, {s:"🌬️ 呼吸", t:"深深吸氣，感覺腹部隆起。"}],
+        adult: [{s:"🌍 空間", t:"感覺身體被椅背支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中最細微的安靜。"}]
     };
 
-    let cfg = { music: 'none', time: 10, bell: 'bowl' };
-    let stepIdx = 0;
+    let cfg = { m: 'none', t: 10, b: 'bowl' };
 
-    function cfgSet(type, val) {
+    function set(type, val) {
         cfg[type] = val;
-        const rowId = type + '-row';
-        const items = document.getElementById(rowId).getElementsByClassName('opt-item');
-        for (let item of items) {
-            item.classList.remove('active');
-            if (item.innerText.toLowerCase().includes(val.toString().toLowerCase())) item.classList.add('active');
-            if (val === 'none' && item.innerText === '寂靜') item.classList.add('active');
-            if (val === 'bowl' && item.innerText === '頌缽') item.classList.add('active');
-            if (val === 'zen' && item.innerText === '禪定') item.classList.add('active');
+        const items = document.getElementById(type + '-row').children;
+        for (let i of items) {
+            i.classList.remove('active');
+            if (i.innerText.toLowerCase().includes(val.toString())) i.classList.add('active');
+            if (val === 'none' && i.innerText === '寂靜') i.classList.add('active');
+            if (val === 'bowl' && i.innerText === '頌缽') i.classList.add('active');
         }
     }
 
-    function start(type) {
-        // 【核心解鎖】點擊瞬間強制啟動音訊上下文
-        const music = document.getElementById('bg-music');
-        const bell = document.getElementById('bell-sound');
+    function go(type) {
+        const music = document.getElementById('bg-m');
+        const bell = document.getElementById('be-m');
         
-        if(cfg.music !== 'none') {
-            music.src = musicLib[cfg.music];
-            music.load();
-            music.play().catch(() => {}); 
-        }
-        
-        if(cfg.bell !== 'mute') {
-            bell.src = bellLib[cfg.bell];
-            bell.load();
-            // 預熱播放
-            bell.play().then(()=> {bell.pause(); bell.currentTime=0;}).catch(()=>{});
-        }
+        // 強制解鎖音訊
+        if(cfg.m !== 'none') { music.src = mLib[cfg.m]; music.play().catch(()=>{}); }
+        if(cfg.b !== 'mute') { bell.src = bLib[cfg.b]; bell.load(); }
 
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
-        run(pool[type]);
+        play(pool[type]);
     }
 
-    function run(steps) {
-        if(stepIdx >= steps.length) { 
-            document.getElementById('step-box').innerHTML = "練習完成 ✨";
-            document.getElementById('journal-area').style.display = 'block';
-            return; 
-        }
-        
-        const item = steps[stepIdx];
-        document.getElementById('step-box').innerHTML = `<div class="sense-tag">${item.s}</div><div class="step-text">${item.t}</div>`;
-        
-        // 提示音
-        if(cfg.bell !== 'mute') {
-            const b = document.getElementById('bell-sound');
-            b.play().catch(()=>{});
-        }
+    function play(steps) {
+        let idx = 0;
+        const run = () => {
+            if (idx >= steps.length) { location.reload(); return; }
+            const item = steps[idx];
+            document.getElementById('step-box').innerHTML = `<div style="color:var(--gold);margin-bottom:10px">${item.s}</div><div style="font-size:1.2rem">${item.t}</div>`;
+            
+            if(cfg.b !== 'mute') document.getElementById('be-m').play().catch(()=>{});
+            
+            const u = new SpeechSynthesisUtterance(item.t); u.lang = 'zh-TW'; u.rate = 0.8;
+            window.speechSynthesis.speak(u);
 
-        // 語音導引
-        const u = new SpeechSynthesisUtterance(item.t);
-        u.lang = 'zh-TW'; u.rate = 0.8;
-        window.speechSynthesis.speak(u);
-
-        let count = cfg.time;
-        document.getElementById('timer-display').innerText = count;
-        let timer = setInterval(() => {
-            count--;
-            document.getElementById('timer-display').innerText = count > 0 ? count : "✨";
-            if(count <= 0) { clearInterval(timer); stepIdx++; run(steps); }
-        }, 1000);
+            let c = cfg.t;
+            document.getElementById('timer').innerText = c;
+            const t = setInterval(() => {
+                c--;
+                document.getElementById('timer').innerText = c > 0 ? c : "✨";
+                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1000); }
+            }, 1000);
+        };
+        run();
     }
 </script>
 </body>
