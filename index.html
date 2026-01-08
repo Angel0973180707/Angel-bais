@@ -7,76 +7,32 @@
     <style>
         :root { --bg: #3D523D; --light: #F2E9E1; --gold: #F2D388; --glass: rgba(255, 255, 255, 0.1); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            margin: 0; font-family: -apple-system, "PingFang TC", sans-serif; 
-            height: 100dvh; background: var(--bg); color: var(--light); 
-            display: flex; justify-content: center; overflow: hidden; 
-        }
-
-        .container { 
-            width: 100%; max-width: 400px; height: 100dvh; 
-            padding: 10px 20px; display: flex; flex-direction: column; 
-            justify-content: space-between; 
-        }
-        
+        body { margin: 0; font-family: -apple-system, "PingFang TC", sans-serif; height: 100dvh; background: var(--bg); color: var(--light); display: flex; justify-content: center; overflow: hidden; }
+        .container { width: 100%; max-width: 400px; height: 100dvh; padding: 10px 20px; display: flex; flex-direction: column; justify-content: space-between; }
         header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 10px; color: var(--gold); margin: 5px 0; text-align: center; padding-left: 10px; }
-
-        /* 金句區：固定兩行 */
-        .intro-box { 
-            background: var(--glass); padding: 15px; border-radius: 20px; 
-            text-align: center; border: 1px solid rgba(255,255,255,0.08);
-            min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
+        .intro-box { background: var(--glass); padding: 15px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.08); min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .usage-tag { font-size: 0.7rem; color: var(--gold); opacity: 0.8; letter-spacing: 2px; margin-bottom: 5px; }
         .quote-text { font-size: 1rem; line-height: 1.5; letter-spacing: 1px; font-style: italic; max-width: 260px; }
-
         .label { font-size: 0.7rem; opacity: 0.6; margin: 8px 0 4px 5px; letter-spacing: 1.5px; }
-
-        /* 時間與語音選項列 */
-        .row { 
-            width: 100%; background: var(--glass); border-radius: 50px; 
-            padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); 
-        }
-        .opt { 
-            flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; 
-            opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; 
-        }
+        .row { width: 100%; background: var(--glass); border-radius: 50px; padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); }
+        .opt { flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; }
         .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
-
-        /* 底部按鈕 */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
-        .btn { 
-            background: var(--glass); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 20px; padding: 14px 5px; text-align: center; 
-            cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
-        }
+        .btn { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 14px 5px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .btn span { font-size: 1.8rem; }
         .btn p { margin: 0; font-size: 0.85rem; letter-spacing: 1px; }
-
-        /* 頁面切換 */
         .page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .active-page { display: flex; }
-
-        /* 安裝頁 */
         #install-page { padding: 20px; text-align: left; justify-content: flex-start; overflow-y: auto; }
         .step-card { background: var(--glass); padding: 15px; border-radius: 15px; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.6; }
         .back-btn { color: var(--gold); cursor: pointer; margin-top: 20px; text-align: center; width: 100%; }
-
-        /* 練習畫面 */
-        .breath-circle { 
-            width: 110px; height: 110px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            animation: b 4s infinite; margin-bottom: 35px; 
-        }
+        .breath-circle { width: 110px; height: 110px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: b 4s infinite; margin-bottom: 35px; }
         #timer { font-size: 2.2rem; font-weight: 200; }
         .step-box { width: 85%; min-height: 150px; }
         .sense-tag { color: var(--gold); margin-bottom: 15px; font-size: 0.9rem; letter-spacing: 5px; font-weight: bold; }
         .step-text { font-size: 1.5rem; line-height: 1.6; max-width: 250px; margin: 0 auto; font-weight: 300; }
-
         .footer { font-size: 0.7rem; opacity: 0.5; text-align: center; padding-bottom: 8px; display: flex; justify-content: center; gap: 15px; }
         .footer a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold); }
-
         @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.3;} 50% {transform: scale(1.1); opacity: 0.6;} }
     </style>
 </head>
@@ -85,12 +41,10 @@
 <div class="container">
     <div id="home-page" class="page active-page" style="justify-content: space-between;">
         <header><h1>Angel</h1></header>
-
         <div class="intro-box">
             <span class="usage-tag">使用時機：感到煩躁或偏見時</span>
-            <div id="random-quote" class="quote-text"></div>
+            <div id="random-quote" class="quote-text">讀取中...</div>
         </div>
-
         <div>
             <div class="label">練習停留時間</div>
             <div class="row" id="t-row">
@@ -104,14 +58,12 @@
                 <div id="v-off" class="opt" onclick="setCfg('v','off')">關閉</div>
             </div>
         </div>
-
         <div class="grid">
             <div class="btn" onclick="goPractice('kids')"><span>🎨</span><p>小小孩</p></div>
             <div class="btn" onclick="goPractice('primary')"><span>🎒</span><p>孩子們</p></div>
             <div class="btn" onclick="goPractice('teen')"><span>🎧</span><p>青少年</p></div>
             <div class="btn" onclick="goPractice('adult')"><span>🌿</span><p>給自己</p></div>
         </div>
-        
         <div class="footer">
             <a href="#" onclick="showPage('install-page')">📲 安裝說明</a>
             <a href="https://forms.gle/PsxMHv62JZKe2GZm7" target="_blank">📋 提供回饋</a>
@@ -131,96 +83,17 @@
     </div>
 </div>
 
+<script src="script.js"></script>
 <script>
-    // 擴充至 10 句金句
-    const quotes = [
-        "偏見是心靈的陰影，<br>覺察則是光。",
-        "每一次呼吸，都是一個<br>重新開始的機會。",
-        "看見自己的偏見，<br>它就開始失去了力量。",
-        "重要的不是發生了什麼，<br>而是你如何看它。",
-        "暫停一下，讓靈魂<br>跟上你的腳步。",
-        "在情緒的海浪下，<br>你依然是平靜的海床。",
-        "偏見往往來自恐懼，<br>而恐懼來自不了解。",
-        "放下評論的眼光，<br>世界會展現新的樣貌。",
-        "心如明鏡，<br>只是反映而不評判。",
-        "簡單的覺察，<br>就是療癒的開始。"
-    ];
-
-    const pool = {
-        kids: [
-            [{s:"👀 視覺", t:"找一個你最喜歡的<br>顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺<br>軟軟的。"}],
-            [{s:"👂 聽覺", t:"聽聽身邊有沒有<br>小動物的聲音？"}, {s:"👃 嗅覺", t:"深深吸氣，聞聞<br>空氣的味道。"}],
-            [{s:"✋ 觸覺", t:"用手摸摸桌子，<br>感覺涼涼的還是溫溫的？"}]
-        ],
-        primary: [
-            [{s:"👂 聽覺", t:"聽聽看，遠方有什麼<br>聲音？"}, {s:"👀 視覺", t:"找出三個圓圓的<br>東西。"}],
-            [{s:"✋ 觸覺", t:"感覺雙腳踩在地面<br>穩穩的力量。"}, {s:"🌬️ 呼吸", t:"像吹蠟燭一樣，<br>慢慢地吐氣。"}]
-        ],
-        teen: [
-            [{s:"✋ 觸覺", t:"感覺雙手合十的<br>溫度。"}, {s:"🌬️ 呼吸", t:"深深吸氣，感覺<br>腹部隆起。"}],
-            [{s:"🧠 覺察", t:"觀察現在腦中出現的<br>第一個念頭。"}, {s:"💪 身體", t:"用力握緊拳頭 3 秒，<br>然後完全放鬆。"}]
-        ],
-        adult: [
-            [{s:"🌍 空間", t:"感覺身體被椅背<br>支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中最細微的<br>安靜。"}],
-            [{s:"🌬️ 呼吸", t:"觀察氣息進入鼻腔時<br>微涼的感覺。"}, {s:"👁️ 觀察", t:"看著前方的一個點，<br>不要給它任何評論。"}]
-        ]
-    };
-
-    let cfg = { t: 10, v: 'on' };
-
-    window.onload = () => {
-        document.getElementById('random-quote').innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
-    };
-
-    function setCfg(type, val) {
-        cfg[type] = val;
-        const items = document.getElementById(type + '-row').children;
-        for (let i of items) i.classList.remove('active');
-        document.getElementById(type + '-' + val).classList.add('active');
-    }
-
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(pageId).classList.add('active-page');
-    }
-
-    function goPractice(type) {
-        showPage('content-page');
-        const sets = pool[type];
-        const selectedSteps = sets[Math.floor(Math.random() * sets.length)];
-        play(selectedSteps);
-    }
-
-    function play(steps) {
-        let idx = 0;
-        const run = () => {
-            if (idx >= steps.length) { 
-                document.getElementById('step-content').innerHTML = "<div class='step-text'>練習完成 ✨<br><br>帶著平靜回到生活。</div>";
-                setTimeout(() => location.reload(), 3000);
-                return; 
-            }
-            const item = steps[idx];
-            document.getElementById('step-content').innerHTML = `
-                <div class="sense-tag">${item.s}</div>
-                <div class="step-text">${item.t}</div>
-            `;
-            
-            if(cfg.v === 'on') {
-                window.speechSynthesis.cancel();
-                const u = new SpeechSynthesisUtterance(item.t.replace('<br>', '')); 
-                u.lang = 'zh-TW'; u.rate = 0.8;
-                window.speechSynthesis.speak(u);
-            }
-
-            let c = cfg.t;
-            document.getElementById('timer').innerText = c;
-            const t = setInterval(() => {
-                c--;
-                document.getElementById('timer').innerText = c > 0 ? c : "✨";
-                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1200); }
-            }, 1000);
-        };
-        run();
+    // 註冊 Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(reg => {
+                console.log('SW 註冊成功');
+            }).catch(err => {
+                console.log('SW 註冊失敗', err);
+            });
+        });
     }
 </script>
 </body>
