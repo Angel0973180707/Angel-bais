@@ -8,56 +8,46 @@
     <meta name="theme-color" content="#3D523D">
     <style>
         :root {
-            /* 深色背景體系 */
             --bg-deep: #3D523D;
             --text-light: #F2E9E1;
             --accent-gold: #F2D388;
             --card-glass: rgba(255, 255, 255, 0.08);
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
         body {
-            margin: 0;
-            font-family: "PingFang TC", "Noto Sans TC", sans-serif;
-            height: 100dvh;
-            background-color: var(--bg-deep) !important;
-            color: var(--text-light) !important;
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
+            margin: 0; font-family: "PingFang TC", "Noto Sans TC", sans-serif;
+            height: 100dvh; background-color: var(--bg-deep) !important;
+            color: var(--text-light) !important; display: flex; justify-content: center; overflow: hidden;
         }
-
         .container { 
             width: 100%; max-width: 480px; height: 100dvh; 
             padding: 20px 25px; display: flex; flex-direction: column; 
             align-items: center; justify-content: space-between; 
             padding-bottom: calc(env(safe-area-inset-bottom) + 30px); 
         }
-
         .page { width: 100%; animation: fadeIn 0.8s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
         #home-page { display: flex; }
 
-        header h1 { font-weight: 200; font-size: 2rem; letter-spacing: 8px; margin: 0; color: var(--accent-gold); }
+        header h1 { font-weight: 200; font-size: 2rem; letter-spacing: 8px; margin-bottom: 5px; color: var(--accent-gold); }
 
-        /* 音樂選擇器 - 磨砂玻璃質感 */
         .settings-area { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; align-items: center; }
+        
+        /* 四字音樂選擇器 - 排版整齊 */
         .music-selector {
-            width: 90%; background: var(--card-glass); border-radius: 50px;
-            padding: 6px; display: flex; justify-content: space-around;
+            width: 95%; background: var(--card-glass); border-radius: 50px;
+            padding: 5px; display: flex; justify-content: space-between;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .music-opt { font-size: 0.85rem; cursor: pointer; opacity: 0.5; padding: 8px 15px; border-radius: 40px; transition: 0.3s; color: var(--text-light); }
+        .music-opt { flex: 1; text-align: center; font-size: 0.8rem; cursor: pointer; opacity: 0.5; padding: 10px 0; border-radius: 40px; transition: 0.3s; color: var(--text-light); letter-spacing: 1px; }
         .music-opt.active { opacity: 1; background: var(--accent-gold); color: var(--bg-deep); font-weight: bold; }
 
         .toggle-btn {
             display: flex; align-items: center; gap: 12px; padding: 12px 25px;
-            background: var(--card-glass); border-radius: 50px; width: 90%;
+            background: var(--card-glass); border-radius: 50px; width: 95%;
             cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
         }
         .toggle-label { font-size: 0.9rem; letter-spacing: 2px; flex-grow: 1; }
 
-        /* 選單按鈕區 */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         .nav-btn {
             background: var(--card-glass) !important; border: 1px solid rgba(255,255,255,0.15);
@@ -68,7 +58,6 @@
         .menu-btn { aspect-ratio: 1 / 1.1; font-size: 1.1rem; letter-spacing: 2px; }
         .menu-btn span { font-size: 2.5rem; margin-bottom: 10px; }
 
-        /* 呼吸倒數區 */
         .breath-area { position: relative; width: 160px; height: 160px; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; }
         .breath-circle { 
             position: absolute; width: 100%; height: 100%; 
@@ -77,7 +66,6 @@
         }
         #timer-display { font-size: 2.5rem; font-weight: 200; color: var(--text-light); z-index: 2; }
 
-        /* 文字整齊排版 */
         .step-box { min-height: 200px; text-align: center; width: 100%; z-index: 2; }
         .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 25px; opacity: 0.8; }
         .step-text { font-size: 1.4rem; line-height: 2.2; letter-spacing: 3px; font-weight: 300; }
@@ -97,10 +85,10 @@
         
         <div class="settings-area">
             <div class="music-selector">
-                <div class="music-opt active" id="m-none" onclick="selectMusic('none')">🔇</div>
-                <div class="music-opt" id="m-deep" onclick="selectMusic('deep')">深度阿發波</div>
-                <div class="music-opt" id="m-relax" onclick="selectMusic('relax')">舒緩頻率</div>
-                <div class="music-opt" id="m-focus" onclick="selectMusic('focus')">平靜波</div>
+                <div class="music-opt active" id="m-none" onclick="selectMusic('none')">保持寂靜</div>
+                <div class="music-opt" id="m-deep" onclick="selectMusic('deep')">深度頻率</div>
+                <div class="music-opt" id="m-relax" onclick="selectMusic('relax')">舒緩波音</div>
+                <div class="music-opt" id="m-focus" onclick="selectMusic('focus')">平靜心流</div>
             </div>
             <div class="toggle-btn" onclick="toggleVoice()">
                 <span id="voice-icon">🔊</span>
@@ -135,9 +123,9 @@
 <script>
     const musicLibrary = {
         none: "",
-        // 替換為穩定的阿發波頻率 (示例連結，建議可更換為您擁有的 mp3)
-        deep: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-        relax: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+        // 使用 Pixabay 或 SoundHelix 的無侵權頻率音樂
+        deep: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", 
+        relax: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3", 
         focus: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3"
     };
 
@@ -153,7 +141,7 @@
             [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
         ],
         teen: [
-            [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔的涼爽。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
+            [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
             [{s:"👂 聽覺", t:"暫時聽聽，環境原本的背景噪音。"}, {s:"👀 視覺", t:"注視一個點，觀察它的光影變化。"}, {s:"🧠 覺察", t:"如果情緒有名字，它現在叫什麼？"}],
             [{s:"✋ 觸覺", t:"感受手機或桌面，指尖傳來的質地。"}, {s:"🌬️ 呼吸", t:"吸氣 4 秒，感覺胸腔擴張的空間。"}, {s:"🧠 覺察", t:"這份壓力，是我的還是別人的？"}]
         ],
@@ -195,8 +183,8 @@
         const music = document.getElementById('bg-music');
         if (selectedMusic !== 'none') {
             music.src = musicLibrary[selectedMusic];
-            music.volume = 0.4;
-            music.play().catch(e => console.log("需互動啟動"));
+            music.volume = 0.3;
+            music.play().catch(e => console.log("等待手動點擊啟動音軌"));
         }
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
