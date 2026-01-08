@@ -7,40 +7,78 @@
     <style>
         :root { --bg: #3D523D; --light: #F2E9E1; --gold: #F2D388; --glass: rgba(255, 255, 255, 0.1); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; font-family: -apple-system, "PingFang TC", sans-serif; height: 100dvh; background: var(--bg); color: var(--light); display: flex; justify-content: center; overflow: hidden; }
-        .container { width: 100%; max-width: 400px; height: 100%; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
         
-        header h1 { font-size: 1.8rem; letter-spacing: 8px; color: var(--gold); margin: 5px 0; text-align: center; font-weight: 300; }
-        
-        /* 使用時機與金句區 */
-        .intro-box { background: var(--glass); padding: 15px; border-radius: 20px; text-align: center; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); }
-        .usage-tag { font-size: 0.7rem; color: var(--gold); opacity: 0.8; letter-spacing: 2px; margin-bottom: 8px; display: block; }
-        .quote-text { font-size: 0.95rem; line-height: 1.6; letter-spacing: 1px; color: var(--light); font-style: italic; }
+        body { 
+            margin: 0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; 
+            height: 100dvh; background: var(--bg); color: var(--light); 
+            display: flex; justify-content: center; overflow: hidden; 
+        }
 
-        .label { font-size: 0.7rem; opacity: 0.6; margin: 10px 0 5px; letter-spacing: 1px; }
-        .row { width: 100%; background: var(--glass); border-radius: 50px; padding: 3px; display: flex; border: 1px solid rgba(255,255,255,0.1); }
-        .opt { flex: 1; text-align: center; font-size: 0.8rem; cursor: pointer; opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; }
+        .container { 
+            width: 100%; max-width: 414px; height: 100%; 
+            padding: 20px; display: flex; flex-direction: column; 
+            justify-content: flex-start; gap: 15px; 
+        }
+        
+        /* 標題排列 */
+        header { text-align: center; padding-top: 10px; }
+        header h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 12px; color: var(--gold); margin: 0; padding-left: 12px; }
+
+        /* 金句區整齊化 */
+        .intro-box { 
+            background: var(--glass); padding: 20px; border-radius: 24px; 
+            text-align: center; border: 1px solid rgba(255,255,255,0.08);
+            min-height: 110px; display: flex; flex-direction: column; justify-content: center;
+        }
+        .usage-tag { font-size: 0.75rem; color: var(--gold); opacity: 0.8; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        .quote-text { font-size: 1rem; line-height: 1.6; letter-spacing: 1.5px; font-style: italic; font-weight: 400; }
+
+        /* 選項標題 */
+        .label { font-size: 0.75rem; opacity: 0.6; margin-left: 5px; letter-spacing: 1.5px; }
+
+        /* 選項按鈕整齊排列 */
+        .row { 
+            width: 100%; background: var(--glass); border-radius: 50px; 
+            padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); 
+        }
+        .opt { 
+            flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; 
+            opacity: 0.4; padding: 12px 0; border-radius: 40px; transition: all 0.3s ease; 
+        }
         .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: 15px 0; }
-        .btn { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; color: var(--light); padding: 15px; text-align: center; cursor: pointer; }
-        .btn span { font-size: 1.8rem; display: block; margin-bottom: 5px; }
-        .btn p { margin: 0; font-size: 0.9rem; letter-spacing: 1px; }
+        /* 四大身分按鈕網格對齊 */
+        .grid { 
+            display: grid; grid-template-columns: 1fr 1fr; 
+            gap: 15px; width: 100%; margin-top: 5px;
+        }
+        .btn { 
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 24px; padding: 20px 10px; text-align: center; 
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .btn span { font-size: 2.2rem; line-height: 1; }
+        .btn p { margin: 0; font-size: 0.95rem; letter-spacing: 2px; font-weight: 400; }
 
-        .footer { font-size: 0.75rem; opacity: 0.5; text-align: center; padding-bottom: 10px; }
-        .footer a { color: var(--gold); text-decoration: none; }
-
+        /* 練習畫面對齊 */
         .page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
-        .breath-circle { width: 120px; height: 120px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: b 4s infinite; margin-bottom: 40px; }
-        #timer { font-size: 2.2rem; font-weight: 200; }
-        .step-box { min-height: 150px; text-align: center; width: 100%; padding: 0 20px; }
-        @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.3;} 50% {transform: scale(1.2); opacity: 0.6;} }
+        .breath-circle { 
+            width: 140px; height: 140px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            animation: b 4s infinite; margin-bottom: 50px; 
+        }
+        #timer { font-size: 2.5rem; font-weight: 200; }
+        .step-box { min-height: 180px; text-align: center; width: 100%; padding: 0 10px; }
+        
+        .footer { font-size: 0.75rem; opacity: 0.4; text-align: center; margin-top: auto; padding-bottom: 15px; }
+
+        @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.3;} 50% {transform: scale(1.15); opacity: 0.6;} }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="home-page" style="display: flex; flex-direction: column; height: 100%;">
+    <div id="home-page" style="display: flex; flex-direction: column; height: 100%; gap: 12px;">
         <header><h1>Angel</h1></header>
 
         <div class="intro-box">
@@ -48,17 +86,21 @@
             <div id="random-quote" class="quote-text">正在深呼吸...</div>
         </div>
 
-        <div class="label">練習停留時間</div>
-        <div class="row" id="t-row">
-            <div id="t-10" class="opt active" onclick="setCfg('t',10)">10秒</div>
-            <div id="t-20" class="opt" onclick="setCfg('t',20)">20秒</div>
-            <div id="t-30" class="opt" onclick="setCfg('t',30)">30秒</div>
+        <div>
+            <div class="label">練習停留時間</div>
+            <div class="row" id="t-row">
+                <div id="t-10" class="opt active" onclick="setCfg('t',10)">10秒</div>
+                <div id="t-20" class="opt" onclick="setCfg('t',20)">20秒</div>
+                <div id="t-30" class="opt" onclick="setCfg('t',30)">30秒</div>
+            </div>
         </div>
 
-        <div class="label">語音導引提示</div>
-        <div class="row" id="v-row">
-            <div id="v-on" class="opt active" onclick="setCfg('v','on')">開啟</div>
-            <div id="v-off" class="opt" onclick="setCfg('v','off')">關閉</div>
+        <div>
+            <div class="label">語音導引提示</div>
+            <div class="row" id="v-row">
+                <div id="v-on" class="opt active" onclick="setCfg('v','on')">開啟</div>
+                <div id="v-off" class="opt" onclick="setCfg('v','off')">關閉</div>
+            </div>
         </div>
 
         <div class="grid">
@@ -68,7 +110,7 @@
             <div class="btn" onclick="go('adult')"><span>🌿</span><p>給自己</p></div>
         </div>
         
-        <div class="footer"><a href="#">📋 提供回饋，讓 Angel 更好</a></div>
+        <div class="footer">📋 提供回饋，讓 Angel 更好</div>
     </div>
 
     <div id="content-page" class="page">
@@ -80,12 +122,12 @@
 <script>
     const quotes = [
         "偏見是心靈的陰影，覺察則是光。",
-        "在情緒的海浪下，你依然是平靜的海床。",
-        "如果你看見了自己的偏見，它就開始失去了力量。",
         "每一次呼吸，都是一個重新開始的機會。",
+        "看見自己的偏見，它就開始失去了力量。",
         "重要的不是發生了什麼，而是你如何看它。",
+        "在情緒的海浪下，你依然是平靜的海床。",
         "暫停一下，讓靈魂跟上你的腳步。",
-        "偏見往往來自恐懼，而恐讀來自不了解。"
+        "偏見往往來自恐懼，而恐懼來自不了解。"
     ];
 
     const pool = {
@@ -97,7 +139,6 @@
 
     let cfg = { t: 10, v: 'on' };
 
-    // 初始化：隨機金句
     window.onload = () => {
         const q = quotes[Math.floor(Math.random() * quotes.length)];
         document.getElementById('random-quote').innerText = q;
@@ -120,17 +161,16 @@
         let idx = 0;
         const run = () => {
             if (idx >= steps.length) { 
-                document.getElementById('step-box').innerHTML = "練習完成 ✨<br><br>帶著這份覺察回到生活。";
+                document.getElementById('step-box').innerHTML = "<div style='font-size:1.5rem; letter-spacing:2px;'>練習完成 ✨<br><br>帶著這份覺察回到生活。</div>";
                 setTimeout(() => location.reload(), 4000);
                 return; 
             }
             const item = steps[idx];
             document.getElementById('step-box').innerHTML = `
-                <div style="color:var(--gold);margin-bottom:15px;font-size:0.9rem;letter-spacing:5px;">${item.s}</div>
-                <div style="font-size:1.4rem;line-height:1.8;font-weight:300;">${item.t}</div>
+                <div style="color:var(--gold); margin-bottom:20px; font-size:1rem; letter-spacing:6px; font-weight:bold;">${item.s}</div>
+                <div style="font-size:1.5rem; line-height:2; font-weight:300; letter-spacing:1px;">${item.t}</div>
             `;
             
-            // 語音導引
             if(cfg.v === 'on') {
                 window.speechSynthesis.cancel();
                 const u = new SpeechSynthesisUtterance(item.t); 
@@ -143,7 +183,7 @@
             const t = setInterval(() => {
                 c--;
                 document.getElementById('timer').innerText = c > 0 ? c : "✨";
-                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1000); }
+                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1200); }
             }, 1000);
         };
         run();
