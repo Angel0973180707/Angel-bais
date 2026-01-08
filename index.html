@@ -10,26 +10,26 @@
         body { margin: 0; font-family: -apple-system, sans-serif; height: 100dvh; background: var(--bg); color: var(--light); display: flex; justify-content: center; overflow: hidden; }
         .container { width: 100%; max-width: 400px; height: 100%; padding: 10px 15px; display: flex; flex-direction: column; justify-content: space-between; }
         
-        header h1 { font-size: 1.5rem; letter-spacing: 5px; color: var(--gold); margin: 5px 0; text-align: center; }
+        header h1 { font-size: 1.5rem; letter-spacing: 5px; color: var(--gold); margin: 5px 0; text-align: center; font-weight: 300; }
         .intro { font-size: 0.75rem; opacity: 0.7; margin-bottom: 8px; text-align: center; line-height: 1.4; }
 
-        .label { font-size: 0.7rem; opacity: 0.6; margin: 5px 0 3px; }
+        .label { font-size: 0.7rem; opacity: 0.6; margin: 8px 0 4px; letter-spacing: 1px; }
         .row { width: 100%; background: var(--glass); border-radius: 20px; padding: 2px; display: flex; border: 1px solid rgba(255,255,255,0.1); }
-        .opt { flex: 1; text-align: center; font-size: 0.7rem; cursor: pointer; opacity: 0.5; padding: 8px 0; border-radius: 18px; transition: 0.2s; }
+        .opt { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.5; padding: 8px 0; border-radius: 18px; transition: 0.3s; }
         .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin: 10px 0; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: 10px 0; }
         .btn { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: var(--light); padding: 12px; text-align: center; cursor: pointer; }
         .btn span { font-size: 1.5rem; display: block; margin-bottom: 2px; }
-        .btn p { margin: 0; font-size: 0.85rem; }
+        .btn p { margin: 0; font-size: 0.85rem; letter-spacing: 1px; }
 
-        .footer { font-size: 0.7rem; opacity: 0.5; text-align: center; padding-bottom: 5px; }
+        .footer { font-size: 0.7rem; opacity: 0.4; text-align: center; padding-bottom: 10px; }
         .footer a { color: var(--light); text-decoration: none; }
 
-        #content-page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
-        .circle { width: 100px; height: 100px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: b 4s infinite; margin-bottom: 20px; }
-        #timer { font-size: 1.8rem; }
-        .step-box { min-height: 120px; text-align: center; width: 100%; padding: 0 10px; }
+        .page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        .circle { width: 110px; height: 110px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: b 4s infinite; margin-bottom: 30px; }
+        #timer { font-size: 2rem; font-weight: 200; }
+        .step-box { min-height: 120px; text-align: center; width: 100%; padding: 0 20px; }
         @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.4;} 50% {transform: scale(1.1); opacity: 0.7;} }
     </style>
 </head>
@@ -42,24 +42,24 @@
     <div id="home-page" style="display: flex; flex-direction: column; height: 100%;">
         <header><h1>Angel</h1><div class="intro">當你感到煩躁時，與感官連結<br>找回內在平靜</div></header>
 
-        <div class="label">氛圍音</div>
+        <div class="label">背景氛圍音</div>
         <div class="row" id="m-row">
-            <div class="opt active" onclick="set('m','none')">寂靜</div>
-            <div class="opt" onclick="set('m','sea')">深海</div>
-            <div class="opt" onclick="set('m','zen')">禪定</div>
+            <div id="m-none" class="opt active" onclick="set('m','none')">寂靜</div>
+            <div id="m-sea" class="opt" onclick="set('m','sea')">深海</div>
+            <div id="m-zen" class="opt" onclick="set('m','zen')">禪定</div>
         </div>
 
-        <div class="label">停留秒數</div>
+        <div class="label">每題停留時間</div>
         <div class="row" id="t-row">
-            <div class="opt active" onclick="set('t',10)">10s</div>
-            <div class="opt" onclick="set('t',20)">20s</div>
-            <div class="opt" onclick="set('t',30)">30s</div>
+            <div id="t-10" class="opt active" onclick="set('t',10)">10秒</div>
+            <div id="t-20" class="opt" onclick="set('t',20)">20秒</div>
+            <div id="t-30" class="opt" onclick="set('t',30)">30秒</div>
         </div>
 
-        <div class="label">提示音</div>
+        <div class="label">換題提示音</div>
         <div class="row" id="b-row">
-            <div class="opt active" onclick="set('b','bowl')">頌缽</div>
-            <div class="opt" onclick="set('b','mute')">無聲</div>
+            <div id="b-bowl" class="opt active" onclick="set('b','bowl')">頌缽</div>
+            <div id="b-mute" class="opt" onclick="set('b','mute')">無聲</div>
         </div>
 
         <div class="grid">
@@ -69,7 +69,7 @@
             <div class="btn" onclick="go('adult')"><span>🌿</span><p>給自己</p></div>
         </div>
         
-        <div class="footer"><a href="#">📋 使用回饋</a></div>
+        <div class="footer"><a href="#">📝 提供使用回饋</a></div>
     </div>
 
     <div id="content-page" class="page">
@@ -79,8 +79,17 @@
 </div>
 
 <script>
-    const mLib = { none: "", sea: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", zen: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" };
-    const bLib = { bowl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3", mute: "" };
+    // 全部使用 MP3 格式確保 iOS 播放
+    const mLib = { 
+        none: "", 
+        sea: "https://assets.mixkit.co/music/preview/mixkit-deep-ocean-hum-1549.mp3", 
+        zen: "https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3" 
+    };
+    const bLib = { 
+        bowl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3", 
+        mute: "" 
+    };
+    
     const pool = {
         kids: [{s:"👀 視覺", t:"找一個你最喜歡的顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺軟軟的。"}],
         primary: [{s:"👂 聽覺", t:"聽聽看，遠方有什麼聲音？"}, {s:"👀 視覺", t:"找出三個圓圓的東西。"}],
@@ -92,22 +101,26 @@
 
     function set(type, val) {
         cfg[type] = val;
+        // 清除該列所有 active 並重新加上
         const items = document.getElementById(type + '-row').children;
-        for (let i of items) {
-            i.classList.remove('active');
-            if (i.innerText.toLowerCase().includes(val.toString())) i.classList.add('active');
-            if (val === 'none' && i.innerText === '寂靜') i.classList.add('active');
-            if (val === 'bowl' && i.innerText === '頌缽') i.classList.add('active');
-        }
+        for (let i of items) i.classList.remove('active');
+        document.getElementById(type + '-' + val).classList.add('active');
     }
 
     function go(type) {
         const music = document.getElementById('bg-m');
         const bell = document.getElementById('be-m');
         
-        // 強制解鎖音訊
-        if(cfg.m !== 'none') { music.src = mLib[cfg.m]; music.play().catch(()=>{}); }
-        if(cfg.b !== 'mute') { bell.src = bLib[cfg.b]; bell.load(); }
+        // 【核心修正】在點擊瞬間強制觸發音訊載入
+        if(cfg.m !== 'none') {
+            music.src = mLib[cfg.m];
+            music.load(); 
+            music.play().catch(e => console.log("背景音被阻攔"));
+        }
+        if(cfg.b !== 'mute') {
+            bell.src = bLib[cfg.b];
+            bell.load();
+        }
 
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
@@ -117,13 +130,24 @@
     function play(steps) {
         let idx = 0;
         const run = () => {
-            if (idx >= steps.length) { location.reload(); return; }
+            if (idx >= steps.length) { 
+                document.getElementById('step-box').innerHTML = "練習完成 ✨";
+                setTimeout(() => location.reload(), 3000);
+                return; 
+            }
             const item = steps[idx];
-            document.getElementById('step-box').innerHTML = `<div style="color:var(--gold);margin-bottom:10px">${item.s}</div><div style="font-size:1.2rem">${item.t}</div>`;
+            document.getElementById('step-box').innerHTML = `<div style="color:var(--gold);margin-bottom:10px;font-size:0.9rem;letter-spacing:5px;">${item.s}</div><div style="font-size:1.3rem;line-height:1.8;">${item.t}</div>`;
             
-            if(cfg.b !== 'mute') document.getElementById('be-m').play().catch(()=>{});
+            // 播放提示音
+            if(cfg.b !== 'mute') {
+                const b = document.getElementById('be-m');
+                b.currentTime = 0;
+                b.play().catch(() => {});
+            }
             
-            const u = new SpeechSynthesisUtterance(item.t); u.lang = 'zh-TW'; u.rate = 0.8;
+            // 語音播放
+            const u = new SpeechSynthesisUtterance(item.t); 
+            u.lang = 'zh-TW'; u.rate = 0.8;
             window.speechSynthesis.speak(u);
 
             let c = cfg.t;
