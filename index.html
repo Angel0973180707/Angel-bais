@@ -11,7 +11,7 @@
             --bg-deep: #3D523D;
             --text-light: #F2E9E1;
             --accent-gold: #F2D388;
-            --card-glass: rgba(255, 255, 255, 0.08);
+            --card-glass: rgba(255, 255, 255, 0.1);
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
@@ -21,28 +21,29 @@
         }
         .container { 
             width: 100%; max-width: 480px; height: 100dvh; 
-            padding: 20px 25px; display: flex; flex-direction: column; 
+            padding: 25px; display: flex; flex-direction: column; 
             align-items: center; justify-content: space-between; 
-            padding-bottom: calc(env(safe-area-inset-bottom) + 30px); 
+            padding-bottom: calc(env(safe-area-inset-bottom) + 35px); 
         }
-        .page { width: 100%; animation: fadeIn 0.8s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        .page { width: 100%; animation: fadeIn 1s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
         #home-page { display: flex; }
 
         header h1 { font-weight: 200; font-size: 2rem; letter-spacing: 8px; margin-bottom: 5px; color: var(--accent-gold); text-align: center; }
 
         .settings-area { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; align-items: center; }
         
+        /* 四字標題音樂選擇器 */
         .music-selector {
-            width: 95%; background: var(--card-glass); border-radius: 50px;
+            width: 100%; background: var(--card-glass); border-radius: 50px;
             padding: 5px; display: flex; justify-content: space-between;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .music-opt { flex: 1; text-align: center; font-size: 0.8rem; cursor: pointer; opacity: 0.5; padding: 10px 0; border-radius: 40px; transition: 0.3s; color: var(--text-light); letter-spacing: 1px; }
+        .music-opt { flex: 1; text-align: center; font-size: 0.8rem; cursor: pointer; opacity: 0.5; padding: 12px 0; border-radius: 40px; transition: 0.3s; color: var(--text-light); letter-spacing: 1px; }
         .music-opt.active { opacity: 1; background: var(--accent-gold); color: var(--bg-deep); font-weight: bold; }
 
         .toggle-btn {
-            display: flex; align-items: center; gap: 12px; padding: 12px 25px;
-            background: var(--card-glass); border-radius: 50px; width: 95%;
+            display: flex; align-items: center; gap: 12px; padding: 13px 25px;
+            background: var(--card-glass); border-radius: 50px; width: 100%;
             cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
         }
         .toggle-label { font-size: 0.9rem; letter-spacing: 2px; flex-grow: 1; }
@@ -63,15 +64,15 @@
             background: radial-gradient(circle, var(--accent-gold) 0%, transparent 75%); 
             border-radius: 50%; filter: blur(15px); animation: breathe 8s ease-in-out infinite; 
         }
-        #timer-display { font-size: 2.5rem; font-weight: 200; color: var(--text-light); z-index: 2; }
+        #timer-display { font-size: 2.8rem; font-weight: 200; color: var(--text-light); z-index: 2; letter-spacing: -2px; }
 
-        .step-box { min-height: 200px; text-align: center; width: 100%; z-index: 2; }
-        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 25px; opacity: 0.8; font-weight: bold; }
-        .step-text { font-size: 1.4rem; line-height: 2.2; letter-spacing: 3px; font-weight: 300; }
+        .step-box { min-height: 220px; text-align: center; width: 100%; z-index: 2; padding: 0 10px; }
+        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 6px; margin-bottom: 30px; opacity: 0.8; font-weight: bold; }
+        .step-text { font-size: 1.45rem; line-height: 2.2; letter-spacing: 3px; font-weight: 300; }
 
-        @keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.2; } 50% { transform: scale(1.4); opacity: 0.5; } }
+        @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.15; } 50% { transform: scale(1.35); opacity: 0.45; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .footer-hint { font-size: 0.8rem; opacity: 0.4; margin-top: 20px; letter-spacing: 2px; text-align: center; width: 100%; }
+        .footer-hint { font-size: 0.8rem; opacity: 0.4; margin-top: 20px; letter-spacing: 2px; text-align: center; }
     </style>
 </head>
 <body>
@@ -85,9 +86,9 @@
         <div class="settings-area">
             <div class="music-selector">
                 <div class="music-opt active" id="m-none" onclick="selectMusic('none')">保持寂靜</div>
-                <div class="music-opt" id="m-deep" onclick="selectMusic('deep')">深度頻率</div>
-                <div class="music-opt" id="m-relax" onclick="selectMusic('relax')">舒緩波音</div>
-                <div class="music-opt" id="m-focus" onclick="selectMusic('focus')">平靜心流</div>
+                <div class="music-opt" id="m-deep" onclick="selectMusic('深度頻率')">深度頻率</div>
+                <div class="music-opt" id="m-relax" onclick="selectMusic('舒緩波音')">舒緩波音</div>
+                <div class="music-opt" id="m-focus" onclick="selectMusic('平靜心流')">平靜心流</div>
             </div>
             <div class="toggle-btn" onclick="toggleVoice()">
                 <span id="voice-icon">🔊</span>
@@ -115,17 +116,16 @@
         </div>
         <div class="step-box" id="step-box" onclick="manualNext()"></div>
         <div id="page-hint" class="footer-hint"></div>
-        <button id="finish-btn" class="nav-btn" style="display:none; width:100%; height:60px; font-weight:bold; margin-top: 30px;" onclick="stopPractice()">結束練習</button>
+        <button id="finish-btn" class="nav-btn" style="display:none; width:100%; height:65px; font-weight:bold; margin-top: 35px;" onclick="stopPractice()">結束練習</button>
     </div>
 </div>
 
 <script>
-    // 這些是無侵權、平靜慢節奏的阿發波音樂資源 (來自 SoundHelix 免費庫)
     const musicLibrary = {
         none: "",
-        deep: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", 
-        relax: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3", 
-        focus: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3"
+        '深度頻率': "https://cdn.pixabay.com/audio/2022/03/24/audio_7314798f48.mp3", 
+        '舒緩波音': "https://cdn.pixabay.com/audio/2022/10/16/audio_19198305c6.mp3", 
+        '平靜心流': "https://cdn.pixabay.com/audio/2022/01/21/audio_179f886f4a.mp3"
     };
 
     const pool = {
@@ -137,7 +137,7 @@
         primary: [
             [{s:"👂 聽覺", t:"聽聽看，環境裡最遠的一個聲音。"}, {s:"👀 視覺", t:"找找看，房間裡三個藍色的東西。"}, {s:"🧘 穩定", t:"感覺腳趾頭用力抓地的力量。"}],
             [{s:"✋ 觸覺", t:"摸摸身邊的物品，它是涼的還是熱的？"}, {s:"👂 聽覺", t:"聽聽看，離你最近的一個聲音。"}, {s:"🧘 穩定", t:"感覺雙手放在大腿上，沈沈的重量。"}],
-            [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
+            [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
         ],
         teen: [
             [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
@@ -151,17 +151,19 @@
         ]
     };
 
-    let selectedMusic = 'none';
+    let selectedMusicName = 'none';
     let isVoiceEnabled = true;
     let isAutoEnabled = true;
     let currentSteps = [];
     let currentIdx = 0;
     let timerInterval;
 
-    function selectMusic(type) {
-        selectedMusic = type;
+    function selectMusic(name) {
+        selectedMusicName = name;
         document.querySelectorAll('.music-opt').forEach(opt => opt.classList.remove('active'));
-        document.getElementById(`m-${type}`).classList.add('active');
+        // 匹配正確的 ID
+        const targetId = name === 'none' ? 'm-none' : (name === '深度頻率' ? 'm-deep' : (name === '舒緩波音' ? 'm-relax' : 'm-focus'));
+        document.getElementById(targetId).classList.add('active');
     }
 
     function toggleVoice() {
@@ -180,9 +182,9 @@
         currentSteps = pool[type][Math.floor(Math.random() * pool[type].length)];
         currentIdx = 0;
         const music = document.getElementById('bg-music');
-        if (selectedMusic !== 'none') {
-            music.src = musicLibrary[selectedMusic];
-            music.volume = 0.2;
+        if (selectedMusicName !== 'none') {
+            music.src = musicLibrary[selectedMusicName];
+            music.volume = 0.15; // 極低預設音量，增加沉浸感
             music.play().catch(e => console.log("等待手動點擊"));
         }
         document.getElementById('home-page').style.display = 'none';
@@ -224,7 +226,9 @@
     function speak(content) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(content);
-        u.lang = 'zh-TW'; u.rate = 0.75; window.speechSynthesis.speak(u);
+        u.lang = 'zh-TW'; 
+        u.rate = 0.7; // 更緩慢的語速
+        window.speechSynthesis.speak(u);
     }
 
     function finish() {
