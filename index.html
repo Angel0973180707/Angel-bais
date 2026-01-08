@@ -4,35 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Angel-偏見覺察</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         :root { --bg: #3D523D; --light: #F2E9E1; --gold: #F2D388; --glass: rgba(255, 255, 255, 0.1); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; font-family: -apple-system, "PingFang TC", sans-serif; height: 100dvh; background: var(--bg); color: var(--light); display: flex; justify-content: center; overflow: hidden; }
-        .container { width: 100%; max-width: 400px; height: 100dvh; padding: 10px 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        body { 
+            margin: 0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; 
+            height: 100dvh; background: var(--bg); color: var(--light); 
+            display: flex; justify-content: center; overflow: hidden; 
+        }
+
+        .container { 
+            width: 100%; max-width: 400px; height: 100dvh; 
+            padding: 10px 20px; display: flex; flex-direction: column; 
+            justify-content: space-between; 
+        }
+        
         header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 10px; color: var(--gold); margin: 5px 0; text-align: center; padding-left: 10px; }
-        .intro-box { background: var(--glass); padding: 15px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.08); min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+        .intro-box { 
+            background: var(--glass); padding: 15px; border-radius: 20px; 
+            text-align: center; border: 1px solid rgba(255,255,255,0.08);
+            min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
         .usage-tag { font-size: 0.7rem; color: var(--gold); opacity: 0.8; letter-spacing: 2px; margin-bottom: 5px; }
         .quote-text { font-size: 1rem; line-height: 1.5; letter-spacing: 1px; font-style: italic; max-width: 260px; }
+
         .label { font-size: 0.7rem; opacity: 0.6; margin: 8px 0 4px 5px; letter-spacing: 1.5px; }
         .row { width: 100%; background: var(--glass); border-radius: 50px; padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); }
         .opt { flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; }
         .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
-        .btn { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 14px 5px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .btn { 
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 20px; padding: 14px 5px; text-align: center; 
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
+        }
         .btn span { font-size: 1.8rem; }
         .btn p { margin: 0; font-size: 0.85rem; letter-spacing: 1px; }
+
         .page { display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .active-page { display: flex; }
+
         #install-page { padding: 20px; text-align: left; justify-content: flex-start; overflow-y: auto; }
         .step-card { background: var(--glass); padding: 15px; border-radius: 15px; margin-bottom: 12px; font-size: 0.9rem; line-height: 1.6; }
         .back-btn { color: var(--gold); cursor: pointer; margin-top: 20px; text-align: center; width: 100%; }
-        .breath-circle { width: 110px; height: 110px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: b 4s infinite; margin-bottom: 35px; }
+
+        .breath-circle { 
+            width: 110px; height: 110px; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            animation: b 4s infinite; margin-bottom: 35px; 
+        }
         #timer { font-size: 2.2rem; font-weight: 200; }
         .step-box { width: 85%; min-height: 150px; }
         .sense-tag { color: var(--gold); margin-bottom: 15px; font-size: 0.9rem; letter-spacing: 5px; font-weight: bold; }
         .step-text { font-size: 1.5rem; line-height: 1.6; max-width: 250px; margin: 0 auto; font-weight: 300; }
+
         .footer { font-size: 0.7rem; opacity: 0.5; text-align: center; padding-bottom: 8px; display: flex; justify-content: center; gap: 15px; }
         .footer a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold); }
+
         @keyframes b { 0%,100% {transform: scale(0.9); opacity: 0.3;} 50% {transform: scale(1.1); opacity: 0.6;} }
     </style>
 </head>
@@ -41,10 +73,12 @@
 <div class="container">
     <div id="home-page" class="page active-page" style="justify-content: space-between;">
         <header><h1>Angel</h1></header>
+
         <div class="intro-box">
             <span class="usage-tag">使用時機：感到煩躁或偏見時</span>
             <div id="random-quote" class="quote-text">讀取中...</div>
         </div>
+
         <div>
             <div class="label">練習停留時間</div>
             <div class="row" id="t-row">
@@ -58,12 +92,14 @@
                 <div id="v-off" class="opt" onclick="setCfg('v','off')">關閉</div>
             </div>
         </div>
+
         <div class="grid">
             <div class="btn" onclick="goPractice('kids')"><span>🎨</span><p>小小孩</p></div>
             <div class="btn" onclick="goPractice('primary')"><span>🎒</span><p>孩子們</p></div>
             <div class="btn" onclick="goPractice('teen')"><span>🎧</span><p>青少年</p></div>
             <div class="btn" onclick="goPractice('adult')"><span>🌿</span><p>給自己</p></div>
         </div>
+        
         <div class="footer">
             <a href="#" onclick="showPage('install-page')">📲 安裝說明</a>
             <a href="https://forms.gle/PsxMHv62JZKe2GZm7" target="_blank">📋 提供回饋</a>
@@ -83,17 +119,83 @@
     </div>
 </div>
 
-<script src="script.js"></script>
 <script>
-    // 註冊 Service Worker
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(reg => {
-                console.log('SW 註冊成功');
-            }).catch(err => {
-                console.log('SW 註冊失敗', err);
-            });
-        });
+    // 內置資料
+    const appData = {
+        kids: [
+            "你像小樹一樣，<br>慢慢呼吸就會長大。", "你的心情像天氣，<br>雲飄走了太陽就出來了。", "你是最棒的小寶貝，<br>大家都很愛你喔。", "抱抱自己，<br>感覺心跳跳得好神氣。", "像吹泡泡一樣，<br>把煩惱輕輕吹走吧。", "閉上眼睛，<br>聽聽肚子裡的小秘密。", "每一次吸氣，<br>都像在聞最香的花。", "你的眼睛亮晶晶，<br>能發現世界的小寶藏。", "不管是哭哭或笑笑，<br>Angel 都會陪著你。", "現在就給自己<br>一個甜甜的微笑吧。"
+        ],
+        teen: [
+            "外面的標籤是別人的，<br>裡面的空間是自己的。", "你不必總是完美，<br>真實的你更有力量。", "情緒就像彈幕，<br>讓它飄過去就好。", "在人群中覺得吵鬧時，<br>回到呼吸的節奏裡。", "別人的期待，<br>不一定要成為你的阻礙。", "感受當下，<br>那是唯一屬於你的時間。", "現在的混亂，<br>只是為了重組更好的你。", "不需要證明什麼，<br>你的存在就有價值。", "暫停不是放棄，<br>是為了更清醒地前進。", "你的內心深處，<br>有一片誰也闖不進的森林。"
+        ],
+        adult: [
+            "偏見是心靈的陰影，<br>覺察則是光。", "在情緒的海浪下，<br>你依然是平靜的海床。", "最重要的不是發生了什麼，<br>而是你如何看它。", "看見自己的偏見，<br>它就開始失去了力量。", "暫停一下，讓靈魂<br>跟上你的腳步。", "放下評論的眼光，<br>世界會展現新的樣貌。", "偏見往往來自恐懼，<br>而恐懼來自不了解。", "心如明鏡，<br>只是反映而不評判。", "練習在回應之前，<br>留出一口呼吸的空間。", "簡單的覺察，<br>就是療癒的開始。"
+        ],
+        practice: {
+            kids: [[{s:"👀 視覺", t:"找一個你最喜歡的<br>顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺<br>軟軟的。"}]],
+            primary: [[{s:"👂 聽覺", t:"聽聽看，遠方有什麼<br>聲音？"}, {s:"👀 視覺", t:"找出三個圓圓的<br>東西。"}]],
+            teen: [[{s:"✋ 觸覺", t:"感覺雙手合十的<br>溫度。"}, {s:"🌬️ 呼吸", t:"深深吸氣，感覺<br>腹部隆起。"}]],
+            adult: [[{s:"🌍 空間", t:"感覺身體被椅背<br>支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中最細微的<br>安靜。"}]],
+        }
+    };
+
+    let cfg = { t: 10, v: 'on' };
+
+    window.onload = () => {
+        setRandomQuote('adult');
+    };
+
+    function setRandomQuote(cat) {
+        let pool = (cat === 'kids' || cat === 'primary') ? appData.kids : (cat === 'teen' ? appData.teen : appData.adult);
+        document.getElementById('random-quote').innerHTML = pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function setCfg(type, val) {
+        cfg[type] = val;
+        const items = document.getElementById(type + '-row').children;
+        for (let i of items) i.classList.remove('active');
+        document.getElementById(type + '-' + val).classList.add('active');
+    }
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+    }
+
+    function goPractice(type) {
+        setRandomQuote(type);
+        showPage('content-page');
+        const sets = appData.practice[type];
+        play(sets[Math.floor(Math.random() * sets.length)]);
+    }
+
+    function play(steps) {
+        let idx = 0;
+        const run = () => {
+            if (idx >= steps.length) { 
+                document.getElementById('step-content').innerHTML = "<div class='step-text'>練習完成 ✨<br><br>帶著平靜回到生活。</div>";
+                setTimeout(() => location.reload(), 3000);
+                return; 
+            }
+            const item = steps[idx];
+            document.getElementById('step-content').innerHTML = `<div class="sense-tag">${item.s}</div><div class="step-text">${item.t}</div>`;
+            
+            if(cfg.v === 'on') {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(item.t.replace('<br>', '')); 
+                u.lang = 'zh-TW'; u.rate = 0.8;
+                window.speechSynthesis.speak(u);
+            }
+
+            let c = cfg.t;
+            document.getElementById('timer').innerText = c;
+            const t = setInterval(() => {
+                c--;
+                document.getElementById('timer').innerText = c > 0 ? c : "✨";
+                if (c <= 0) { clearInterval(t); idx++; setTimeout(run, 1000); }
+            }, 1000);
+        };
+        run();
     }
 </script>
 </body>
