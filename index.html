@@ -28,11 +28,10 @@
         .page { width: 100%; animation: fadeIn 0.8s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
         #home-page { display: flex; }
 
-        header h1 { font-weight: 200; font-size: 2rem; letter-spacing: 8px; margin-bottom: 5px; color: var(--accent-gold); }
+        header h1 { font-weight: 200; font-size: 2rem; letter-spacing: 8px; margin-bottom: 5px; color: var(--accent-gold); text-align: center; }
 
         .settings-area { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; align-items: center; }
         
-        /* 四字音樂選擇器 - 排版整齊 */
         .music-selector {
             width: 95%; background: var(--card-glass); border-radius: 50px;
             padding: 5px; display: flex; justify-content: space-between;
@@ -67,17 +66,17 @@
         #timer-display { font-size: 2.5rem; font-weight: 200; color: var(--text-light); z-index: 2; }
 
         .step-box { min-height: 200px; text-align: center; width: 100%; z-index: 2; }
-        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 25px; opacity: 0.8; }
+        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 25px; opacity: 0.8; font-weight: bold; }
         .step-text { font-size: 1.4rem; line-height: 2.2; letter-spacing: 3px; font-weight: 300; }
 
         @keyframes breathe { 0%, 100% { transform: scale(0.8); opacity: 0.2; } 50% { transform: scale(1.4); opacity: 0.5; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .footer-hint { font-size: 0.8rem; opacity: 0.4; margin-top: 20px; letter-spacing: 2px; }
+        .footer-hint { font-size: 0.8rem; opacity: 0.4; margin-top: 20px; letter-spacing: 2px; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
 
-<audio id="bg-music" loop></audio>
+<audio id="bg-music" loop preload="auto"></audio>
 
 <div class="container">
     <div id="home-page" class="page">
@@ -121,9 +120,9 @@
 </div>
 
 <script>
+    // 這些是無侵權、平靜慢節奏的阿發波音樂資源 (來自 SoundHelix 免費庫)
     const musicLibrary = {
         none: "",
-        // 使用 Pixabay 或 SoundHelix 的無侵權頻率音樂
         deep: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", 
         relax: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3", 
         focus: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3"
@@ -138,7 +137,7 @@
         primary: [
             [{s:"👂 聽覺", t:"聽聽看，環境裡最遠的一個聲音。"}, {s:"👀 視覺", t:"找找看，房間裡三個藍色的東西。"}, {s:"🧘 穩定", t:"感覺腳趾頭用力抓地的力量。"}],
             [{s:"✋ 觸覺", t:"摸摸身邊的物品，它是涼的還是熱的？"}, {s:"👂 聽覺", t:"聽聽看，離你最近的一個聲音。"}, {s:"🧘 穩定", t:"感覺雙手放在大腿上，沈沈的重量。"}],
-            [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
+            [{s:"👀 視覺", t:"閉上眼，想像有一滴水滴入湖面。"}, {s:"👂 聽覺", t:"專注聽自己的呼吸聲，像海海浪嗎？"}, {s:"🧘 穩定", t:"感覺脊椎像小樹一樣，慢慢長高。"}]
         ],
         teen: [
             [{s:"✋ 觸覺", t:"摸摸衣服，是粗糙還是柔軟？"}, {s:"👃 嗅覺", t:"感覺冷空氣進到鼻腔。"}, {s:"🧠 覺察", t:"我現在的安全感，在哪裡？"}],
@@ -183,8 +182,8 @@
         const music = document.getElementById('bg-music');
         if (selectedMusic !== 'none') {
             music.src = musicLibrary[selectedMusic];
-            music.volume = 0.3;
-            music.play().catch(e => console.log("等待手動點擊啟動音軌"));
+            music.volume = 0.2;
+            music.play().catch(e => console.log("等待手動點擊"));
         }
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
