@@ -13,53 +13,50 @@
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
-            margin: 0; font-family: "PingFang TC", sans-serif;
+            margin: 0; font-family: -apple-system, "PingFang TC", sans-serif;
             height: 100dvh; background-color: var(--bg-deep);
             color: var(--text-light); display: flex; justify-content: center; overflow: hidden;
         }
         .container { 
-            width: 100%; max-width: 480px; height: 100dvh; 
-            padding: 20px; display: flex; flex-direction: column; 
-            align-items: center; justify-content: space-between;
+            width: 100%; max-width: 450px; height: 100%; 
+            padding: 15px 20px; display: flex; flex-direction: column; 
+            justify-content: space-between; /* 確保頂部與底部撐開 */
         }
         .page { width: 100%; display: none; flex-direction: column; align-items: center; }
-        #home-page { display: flex; animation: fadeIn 0.8s ease; }
+        
+        /* 頁頭縮小避免擠壓 */
+        header h1 { font-weight: 200; font-size: 1.8rem; letter-spacing: 8px; color: var(--accent-gold); margin: 5px 0; }
+        .intro-text { font-size: 0.8rem; opacity: 0.7; line-height: 1.5; margin-bottom: 10px; text-align: center; }
 
-        header h1 { font-weight: 200; font-size: 2rem; letter-spacing: 10px; color: var(--accent-gold); margin: 10px 0; }
-        .intro-text { font-size: 0.85rem; opacity: 0.8; line-height: 1.6; margin-bottom: 20px; text-align: center; }
-
-        /* 選項區塊 */
-        .section-label { font-size: 0.75rem; letter-spacing: 2px; margin: 15px 0 8px; opacity: 0.6; align-self: flex-start; }
+        /* 選項區緊湊化 */
+        .section-label { font-size: 0.75rem; letter-spacing: 1px; margin: 8px 0 4px; opacity: 0.6; align-self: flex-start; }
         .option-row {
             width: 100%; background: var(--card-glass); border-radius: 50px;
-            padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 5px;
+            padding: 3px; display: flex; border: 1px solid rgba(255,255,255,0.1);
         }
-        .opt-item { flex: 1; text-align: center; font-size: 0.7rem; cursor: pointer; opacity: 0.4; padding: 10px 0; border-radius: 30px; transition: 0.3s; }
+        .opt-item { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.4; padding: 8px 0; border-radius: 30px; transition: 0.2s; }
         .opt-item.active { opacity: 1; background: var(--accent-gold); color: var(--bg-deep); font-weight: bold; }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 15px; }
-        .nav-btn { background: var(--card-glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: var(--text-light); cursor: pointer; }
-        .menu-btn { aspect-ratio: 1.1 / 1; font-size: 1rem; }
-        .menu-btn span { font-size: 2rem; display: block; margin-bottom: 5px; }
+        /* 按鈕區 */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 10px; }
+        .nav-btn { background: var(--card-glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: var(--text-light); cursor: pointer; padding: 15px; }
+        .menu-btn { font-size: 0.9rem; letter-spacing: 2px; }
+        .menu-btn span { font-size: 1.8rem; display: block; margin-bottom: 3px; }
 
-        /* 練習頁 */
+        /* 練習中頁面 */
         .breath-circle { 
-            width: 130px; height: 130px; background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%); 
-            border-radius: 50%; filter: blur(10px); animation: breathe 8s infinite; margin: 40px 0;
+            width: 120px; height: 120px; background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%); 
+            border-radius: 50%; filter: blur(8px); animation: breathe 8s infinite; margin: 30px 0;
             display: flex; align-items: center; justify-content: center;
         }
-        #timer-display { font-size: 2.2rem; font-weight: 200; color: white; filter: blur(0); }
+        #timer-display { font-size: 2rem; filter: blur(0); }
+        .step-box { min-height: 140px; text-align: center; width: 100%; }
+        .step-text { font-size: 1.25rem; line-height: 1.8; letter-spacing: 1px; }
 
-        .step-box { min-height: 160px; text-align: center; width: 100%; }
-        .sense-tag { font-size: 0.8rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 10px; }
-        .step-text { font-size: 1.3rem; line-height: 1.8; }
-
-        .journal-box { width: 100%; margin-top: 20px; display:none; }
-        .journal-input { width: 100%; background: var(--card-glass); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 15px; resize: none; }
+        .journal-box { width: 100%; margin-top: 10px; }
+        .journal-input { width: 100%; background: var(--card-glass); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 12px; border-radius: 15px; outline: none; }
 
         @keyframes breathe { 0%, 100% { transform: scale(0.9); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.6; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -68,29 +65,29 @@
 <audio id="bell-sound" playsinline></audio>
 
 <div class="container">
-    <div id="home-page" class="page">
+    <div id="home-page" class="page" style="display: flex;">
         <header><h1>Angel</h1><div class="intro-text">當你感到偏見或煩躁時，<br>與感官連結，找回內在平靜。</div></header>
 
-        <div class="section-label">背景音樂（極致舒緩）</div>
+        <div class="section-label">舒緩氛圍音</div>
         <div class="option-row" id="music-row">
-            <div class="opt-item active" onclick="setMusic('none')">寂靜</div>
-            <div class="opt-item" onclick="setMusic('sea')">深海</div>
-            <div class="opt-item" onclick="setMusic('wind')">微風</div>
-            <div class="opt-item" onclick="setMusic('space')">星空</div>
+            <div class="opt-item active" onclick="cfgSet('music','none')">寂靜</div>
+            <div class="opt-item" onclick="cfgSet('music','sea')">深海</div>
+            <div class="opt-item" onclick="cfgSet('music','wind')">微風</div>
+            <div class="opt-item" onclick="cfgSet('music','zen')">禪定</div>
         </div>
 
-        <div class="section-label">每題停留時長</div>
+        <div class="section-label">每題停留秒數</div>
         <div class="option-row" id="time-row">
-            <div class="opt-item active" onclick="setTime(10)">10秒</div>
-            <div class="opt-item" onclick="setTime(20)">20秒</div>
-            <div class="opt-item" onclick="setTime(30)">30秒</div>
+            <div class="opt-item active" onclick="cfgSet('time',10)">10s</div>
+            <div class="opt-item" onclick="cfgSet('time',20)">20s</div>
+            <div class="opt-item" onclick="cfgSet('time',30)">30s</div>
         </div>
 
-        <div class="section-label">提示音效</div>
+        <div class="section-label">提示音效 (換題時)</div>
         <div class="option-row" id="bell-row">
-            <div class="opt-item active" onclick="setBell('bowl')">頌缽</div>
-            <div class="opt-item" onclick="setBell('chime')">風鈴</div>
-            <div class="opt-item" onclick="setBell('mute')">無聲</div>
+            <div class="opt-item active" onclick="cfgSet('bell','bowl')">頌缽</div>
+            <div class="opt-item" onclick="cfgSet('bell','chime')">木鈴</div>
+            <div class="opt-item" onclick="cfgSet('bell','mute')">無聲</div>
         </div>
 
         <div class="menu-grid">
@@ -98,58 +95,75 @@
             <button class="nav-btn menu-btn" onclick="start('adult')"><span>🌿</span>給自己</button>
         </div>
         
-        <div style="font-size: 0.7rem; margin-top: 20px; opacity: 0.5;">
-            <a href="您的表單連結" style="color: white;">📋 提供使用回饋</a>
+        <div style="font-size: 0.7rem; margin: 15px 0 5px; opacity: 0.4; text-align: center;">
+            <a href="https://forms.gle/your-id" style="color: white; text-decoration: none;">📋 使用回饋</a>
         </div>
     </div>
 
     <div id="content-page" class="page">
         <div class="breath-circle"><div id="timer-display"></div></div>
         <div class="step-box" id="step-box"></div>
-        <div id="journal-area" class="journal-box">
-            <textarea class="journal-input" id="note" placeholder="此刻的心情是... 📝"></textarea>
-            <button class="nav-btn" style="width:100%; padding:15px; margin-top:10px;" onclick="location.reload()">完成練習</button>
+        <div id="journal-area" class="journal-box" style="display:none;">
+            <textarea class="journal-input" id="note" rows="3" placeholder="練習結束，此刻的心情..."></textarea>
+            <button class="nav-btn" style="width:100%; margin-top:10px; background:var(--accent-gold); color:var(--bg-deep); font-weight:bold;" onclick="location.reload()">儲存並完成</button>
         </div>
     </div>
 </div>
 
 <script>
+    // 使用全 MP3 格式，確保 iOS 100% 相容
     const musicLib = {
         none: "",
-        sea: "https://actions.google.com/sounds/v1/ambiences/deep_hum.ogg",
-        wind: "https://actions.google.com/sounds/v1/ambiences/wind_in_trees.ogg",
-        space: "https://actions.google.com/sounds/v1/ambiences/soft_low_hum.ogg"
+        sea: "https://assets.mixkit.co/music/preview/mixkit-deep-ocean-hum-1549.mp3", 
+        wind: "https://www.soundjay.com/nature/wind-01.mp3",
+        zen: "https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3"
     };
 
     const bellLib = {
-        bowl: "https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", // 暫代，建議換成頌缽mp3
-        chime: "https://actions.google.com/sounds/v1/clocks/mechanical_clock_ring.ogg",
+        bowl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3", // 禪意頌缽感
+        chime: "https://www.soundjay.com/misc/sounds/magic-chime-01.mp3",
         mute: ""
     };
 
     const pool = {
         kids: [{s:"👀 視覺", t:"看看窗外，找一個綠色的東西。"}, {s:"✋ 觸覺", t:"摸摸自己的手心，是暖暖的嗎？"}, {s:"🌬️ 嗅覺", t:"深呼吸，聞聞空氣的味道。"}],
-        adult: [{s:"🌍 空間", t:"感覺身體在椅子上的重量。"}, {s:"👂 聽覺", t:"留意房間內最微弱的聲音。"}, {s:"🌿 整合", t:"對自己說：我現在很安全。"}]
+        adult: [{s:"🌍 空間", t:"感覺身體被椅子支撐的力量。"}, {s:"👂 聽覺", t:"留意房間內最微弱的聲音。"}, {s:"🌿 整合", t:"對自己說：我現在很安全。"}]
     };
 
     let cfg = { music: 'none', time: 10, bell: 'bowl' };
     let stepIdx = 0;
 
-    function setMusic(k) { cfg.music = k; updateUI('music-row', k); }
-    function setTime(v) { cfg.time = v; updateUI('time-row', v); }
-    function setBell(k) { cfg.bell = k; updateUI('bell-row', k); }
-
-    function updateUI(id, val) {
-        const row = document.getElementById(id);
-        Array.from(row.children).forEach((el, i) => {
-            el.classList.toggle('active', el.innerText.includes(val) || (id==='music-row' && i===['none','sea','wind','space'].indexOf(val)));
-        });
+    function cfgSet(type, val) {
+        cfg[type] = val;
+        const rowId = type + '-row';
+        const items = document.getElementById(rowId).getElementsByClassName('opt-item');
+        for (let item of items) {
+            item.classList.remove('active');
+            if (item.innerText.toLowerCase().includes(val.toString().toLowerCase())) item.classList.add('active');
+            if (val === 'none' && item.innerText === '寂靜') item.classList.add('active');
+            if (val === 'bowl' && item.innerText === '頌缽') item.classList.add('active');
+            if (val === 'zen' && item.innerText === '禪定') item.classList.add('active');
+        }
     }
 
     function start(type) {
+        // 【核心解鎖】點擊瞬間強制啟動音訊上下文
         const music = document.getElementById('bg-music');
-        if(cfg.music !== 'none') { music.src = musicLib[cfg.music]; music.volume = 0.2; music.play(); }
+        const bell = document.getElementById('bell-sound');
         
+        if(cfg.music !== 'none') {
+            music.src = musicLib[cfg.music];
+            music.load();
+            music.play().catch(() => {}); 
+        }
+        
+        if(cfg.bell !== 'mute') {
+            bell.src = bellLib[cfg.bell];
+            bell.load();
+            // 預熱播放
+            bell.play().then(()=> {bell.pause(); bell.currentTime=0;}).catch(()=>{});
+        }
+
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
         run(pool[type]);
@@ -168,11 +182,12 @@
         // 提示音
         if(cfg.bell !== 'mute') {
             const b = document.getElementById('bell-sound');
-            b.src = bellLib[cfg.bell]; b.play();
+            b.play().catch(()=>{});
         }
 
-        // 語音
-        const u = new SpeechSynthesisUtterance(item.t); u.lang = 'zh-TW'; u.rate = 0.8;
+        // 語音導引
+        const u = new SpeechSynthesisUtterance(item.t);
+        u.lang = 'zh-TW'; u.rate = 0.8;
         window.speechSynthesis.speak(u);
 
         let count = cfg.time;
