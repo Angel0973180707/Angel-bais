@@ -32,8 +32,17 @@
         .quote-text { font-size: 1rem; line-height: 1.5; letter-spacing: 1px; font-style: italic; max-width: 260px; }
 
         .label { font-size: 0.7rem; opacity: 0.6; margin: 8px 0 4px 5px; letter-spacing: 1.5px; }
-        .row { width: 100%; background: var(--glass); border-radius: 50px; padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); }
-        .opt { flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; }
+        
+        /* 選項按鈕修正：使用 flex 確保不重疊 */
+        .row { 
+            width: 100%; background: var(--glass); border-radius: 50px; 
+            padding: 4px; display: flex; border: 1px solid rgba(255,255,255,0.1); 
+            margin-bottom: 10px;
+        }
+        .opt { 
+            flex: 1; text-align: center; font-size: 0.85rem; cursor: pointer; 
+            opacity: 0.4; padding: 10px 0; border-radius: 40px; transition: 0.3s; 
+        }
         .opt.active { opacity: 1; background: var(--gold); color: var(--bg); font-weight: bold; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
@@ -76,7 +85,7 @@
 
         <div class="intro-box">
             <span class="usage-tag">使用時機：感到煩躁或偏見時</span>
-            <div id="random-quote" class="quote-text">讀取中...</div>
+            <div id="random-quote" class="quote-text">每一次呼吸，都是一個<br>重新開始的機會。</div>
         </div>
 
         <div>
@@ -120,16 +129,15 @@
 </div>
 
 <script>
-    // 內置資料
     const appData = {
         kids: [
-            "你像小樹一樣，<br>慢慢呼吸就會長大。", "你的心情像天氣，<br>雲飄走了太陽就出來了。", "你是最棒的小寶貝，<br>大家都很愛你喔。", "抱抱自己，<br>感覺心跳跳得好神氣。", "像吹泡泡一樣，<br>把煩惱輕輕吹走吧。", "閉上眼睛，<br>聽聽肚子裡的小秘密。", "每一次吸氣，<br>都像在聞最香的花。", "你的眼睛亮晶晶，<br>能發現世界的小寶藏。", "不管是哭哭或笑笑，<br>Angel 都會陪著你。", "現在就給自己<br>一個甜甜的微笑吧。"
+            "你像小樹一樣，<br>慢慢呼吸就會長大。", "你的心情像天氣，<br>雲飄走了太陽就出來了。", "抱抱自己，<br>感覺心跳跳得好神氣。", "像吹泡泡一樣，<br>把煩惱輕輕吹走吧。"
         ],
         teen: [
-            "外面的標籤是別人的，<br>裡面的空間是自己的。", "你不必總是完美，<br>真實的你更有力量。", "情緒就像彈幕，<br>讓它飄過去就好。", "在人群中覺得吵鬧時，<br>回到呼吸的節奏裡。", "別人的期待，<br>不一定要成為你的阻礙。", "感受當下，<br>那是唯一屬於你的時間。", "現在的混亂，<br>只是為了重組更好的你。", "不需要證明什麼，<br>你的存在就有價值。", "暫停不是放棄，<br>是為了更清醒地前進。", "你的內心深處，<br>有一片誰也闖不進的森林。"
+            "外面的標籤是別人的，<br>裡面的空間是自己的。", "你不必總是完美，<br>真實的你更有力量。", "情緒就像彈幕，<br>讓它飄過去就好。", "暫停不是放棄，<br>是為了更清醒地前進。"
         ],
         adult: [
-            "偏見是心靈的陰影，<br>覺察則是光。", "在情緒的海浪下，<br>你依然是平靜的海床。", "最重要的不是發生了什麼，<br>而是你如何看它。", "看見自己的偏見，<br>它就開始失去了力量。", "暫停一下，讓靈魂<br>跟上你的腳步。", "放下評論的眼光，<br>世界會展現新的樣貌。", "偏見往往來自恐懼，<br>而恐懼來自不了解。", "心如明鏡，<br>只是反映而不評判。", "練習在回應之前，<br>留出一口呼吸的空間。", "簡單的覺察，<br>就是療癒的開始。"
+            "偏見是心靈的陰影，<br>覺察則是光。", "在情緒的海浪下，<br>你依然是平靜的海床。", "最重要的不是發生了什麼，<br>而是你如何看它。", "看見自己的偏見，<br>它就開始失去了力量。"
         ],
         practice: {
             kids: [[{s:"👀 視覺", t:"找一個你最喜歡的<br>顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺<br>軟軟的。"}]],
@@ -140,15 +148,6 @@
     };
 
     let cfg = { t: 10, v: 'on' };
-
-    window.onload = () => {
-        setRandomQuote('adult');
-    };
-
-    function setRandomQuote(cat) {
-        let pool = (cat === 'kids' || cat === 'primary') ? appData.kids : (cat === 'teen' ? appData.teen : appData.adult);
-        document.getElementById('random-quote').innerHTML = pool[Math.floor(Math.random() * pool.length)];
-    }
 
     function setCfg(type, val) {
         cfg[type] = val;
@@ -163,7 +162,10 @@
     }
 
     function goPractice(type) {
-        setRandomQuote(type);
+        // 切換對應分類金句
+        let pool = (type === 'kids' || type === 'primary') ? appData.kids : (type === 'teen' ? appData.teen : appData.adult);
+        document.getElementById('random-quote').innerHTML = pool[Math.floor(Math.random() * pool.length)];
+        
         showPage('content-page');
         const sets = appData.practice[type];
         play(sets[Math.floor(Math.random() * sets.length)]);
