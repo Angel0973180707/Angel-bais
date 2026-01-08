@@ -1,19 +1,22 @@
 {
-  "name": "Angel-偏見覺察 (智慧版)",
+  "name": "Angel 偏見覺察工具",
   "short_name": "Angel",
-  "description": "具備自由節奏、自動帶領與語音導引的覺察空間。",
-  "start_url": "./index.html",
+  "description": "透過感官練習找回內在平靜",
+  "start_url": "index.html",
   "display": "standalone",
+  "background_color": "#3D523D",
+  "theme_color": "#3D523D",
   "orientation": "portrait",
-  "background_color": "#F9F5F0",
-  "theme_color": "#B99B6B",
   "icons": [
     {
-      "src": "icon.png",
-      "sizes": "192x192 512x512",
+      "src": "https://img.icons8.com/ios-filled/192/F2D388/clover.png",
       "type": "image/png",
-      "purpose": "any maskable"
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://img.icons8.com/ios-filled/512/F2D388/clover.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }
-
