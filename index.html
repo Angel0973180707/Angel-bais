@@ -23,36 +23,30 @@
             align-items: center; justify-content: space-between; 
             padding-bottom: calc(env(safe-area-inset-bottom) + 20px); 
         }
-        .page { width: 100%; animation: fadeIn 0.8s ease; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
+        .page { width: 100%; display: none; height: 100%; flex-direction: column; align-items: center; justify-content: center; }
         #home-page { display: flex; justify-content: flex-start; padding-top: 20px; }
 
-        header { text-align: center; margin-bottom: 20px; }
+        header { text-align: center; margin-bottom: 25px; }
         header h1 { font-weight: 200; font-size: 2.2rem; letter-spacing: 10px; margin: 0; color: var(--accent-gold); }
-        .intro-text { font-size: 0.9rem; opacity: 0.8; line-height: 1.6; letter-spacing: 1px; margin-top: 10px; }
+        .intro-text { font-size: 0.9rem; opacity: 0.8; line-height: 1.8; letter-spacing: 1px; margin-top: 15px; text-align: center; }
 
-        .settings-area { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .settings-area { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
         .music-selector {
             width: 100%; background: var(--card-glass); border-radius: 50px;
             padding: 5px; display: flex; justify-content: space-between;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .music-opt { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.5; padding: 12px 0; border-radius: 40px; transition: 0.3s; letter-spacing: 1px; }
+        .music-opt { flex: 1; text-align: center; font-size: 0.75rem; cursor: pointer; opacity: 0.5; padding: 12px 0; border-radius: 40px; transition: 0.3s; }
         .music-opt.active { opacity: 1; background: var(--accent-gold); color: var(--bg-deep); font-weight: bold; }
 
-        .toggle-btn {
-            display: flex; align-items: center; gap: 12px; padding: 12px 20px;
-            background: var(--card-glass); border-radius: 50px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .toggle-label { font-size: 0.85rem; letter-spacing: 1px; flex-grow: 1; }
-
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
         .nav-btn {
             background: var(--card-glass); border: 1px solid rgba(255,255,255,0.15);
             border-radius: 25px; display: flex; flex-direction: column;
             justify-content: center; align-items: center; color: var(--text-light); cursor: pointer;
         }
-        .menu-btn { aspect-ratio: 1 / 1; font-size: 1rem; letter-spacing: 2px; }
-        .menu-btn span { font-size: 2.2rem; margin-bottom: 8px; }
+        .menu-btn { aspect-ratio: 1 / 1; font-size: 1.1rem; letter-spacing: 2px; }
+        .menu-btn span { font-size: 2.5rem; margin-bottom: 10px; }
 
         .breath-area { position: relative; width: 140px; height: 140px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; }
         .breath-circle { 
@@ -62,18 +56,17 @@
         }
         #timer-display { font-size: 2.5rem; font-weight: 200; z-index: 2; }
 
-        .step-box { min-height: 200px; text-align: center; width: 100%; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .sense-tag { font-size: 0.85rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 20px; font-weight: bold; }
-        .step-text { font-size: 1.3rem; line-height: 1.8; letter-spacing: 2px; font-weight: 300; }
+        .step-box { min-height: 180px; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .sense-tag { font-size: 0.9rem; color: var(--accent-gold); letter-spacing: 5px; margin-bottom: 15px; font-weight: bold; }
+        .step-text { font-size: 1.35rem; line-height: 1.8; letter-spacing: 2px; }
 
         .journal-box { width: 100%; background: var(--card-glass); border-radius: 20px; padding: 15px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .journal-input { width: 100%; background: transparent; border: none; color: var(--text-light); font-size: 1rem; resize: none; outline: none; height: 60px; }
+        .journal-input { width: 100%; background: transparent; border: none; color: var(--text-light); font-size: 1rem; resize: none; outline: none; height: 70px; }
         
-        .footer-links { font-size: 0.75rem; margin-top: 15px; opacity: 0.6; }
-        .footer-links a { color: var(--accent-gold); text-decoration: none; }
+        .footer-links { font-size: 0.8rem; margin-top: 20px; opacity: 0.7; }
+        .footer-links a { color: var(--accent-gold); text-decoration: underline; }
 
         @keyframes breathe { 0%, 100% { transform: scale(0.85); opacity: 0.2; } 50% { transform: scale(1.3); opacity: 0.5; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -81,7 +74,7 @@
 <audio id="bg-music" loop playsinline preload="auto"></audio>
 
 <div class="container">
-    <div id="home-page" class="page">
+    <div id="home-page" class="page" style="display:flex;">
         <header>
             <h1>Angel</h1>
             <div class="intro-text">
@@ -96,10 +89,6 @@
                 <div class="music-opt" id="opt-relax" onclick="selectMusic('relax')">舒緩波音</div>
                 <div class="music-opt" id="opt-focus" onclick="selectMusic('focus')">平靜心流</div>
             </div>
-            <div class="toggle-btn" onclick="toggleVoice()">
-                <span id="voice-icon">🔊</span>
-                <span class="toggle-label" id="voice-text">語音導引：開啟</span>
-            </div>
         </div>
 
         <div class="menu-grid">
@@ -110,7 +99,7 @@
         </div>
         
         <div class="footer-links">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScXXXXXXXXX/viewform" target="_blank">📣 提供使用回饋</a>
+            <a href="https://docs.google.com/forms/d/e/您的表單ID/viewform" target="_blank">📣 提供使用回饋</a>
         </div>
     </div>
 
@@ -119,21 +108,18 @@
             <div class="breath-circle"></div>
             <div id="timer-display"></div>
         </div>
-        <div class="step-box" id="step-box" onclick="manualNext()"></div>
+        <div class="step-box" id="step-box"></div>
         
         <div id="finish-area" style="display:none; width:100%;">
             <div class="journal-box">
-                <textarea class="journal-input" id="journal-text" placeholder="寫下此刻的心情... ✨🍃🧘"></textarea>
+                <textarea class="journal-input" id="journal-text" placeholder="練習結束了，此刻的心情是... 📝✨"></textarea>
             </div>
-            <button class="nav-btn" style="width:100%; height:55px; margin-top:15px; font-weight:bold; background:var(--accent-gold); color:var(--bg-deep);" onclick="stopPractice()">結束並回首頁</button>
+            <button class="nav-btn" style="width:100%; height:60px; margin-top:15px; font-weight:bold; background:var(--accent-gold); color:var(--bg-deep);" onclick="location.reload()">完成練習</button>
         </div>
-        
-        <div id="page-hint" style="font-size:0.8rem; opacity:0.5; margin-top:20px; letter-spacing:2px; text-align: center;"></div>
     </div>
 </div>
 
 <script>
-    // 使用最穩定、快速的 Google 靜音環境音連結
     const musicLibrary = {
         none: "",
         deep: "https://actions.google.com/sounds/v1/ambiences/deep_hum.ogg", 
@@ -142,15 +128,13 @@
     };
 
     const pool = {
-        kids: [[{s:"👀 視覺", t:"找一個你最喜歡的顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺軟軟的。"}, {s:"🌬️ 嗅覺", t:"深呼吸，像在聞花香。"}]],
+        kids: [[{s:"👀 視覺", t:"找一個你最喜歡的顏色。"}, {s:"✋ 觸覺", t:"摸摸衣服，感覺軟軟的。"}, {s:"🌬️ 嗅覺", t:"深呼吸，聞聞花香。"}]],
         primary: [[{s:"👂 聽覺", t:"聽聽看，遠方有什麼聲音？"}, {s:"👀 視覺", t:"找出三個圓圓的東西。"}, {s:"🧘 穩定", t:"感覺腳掌踩在地上很穩。"}]],
         teen: [[{s:"✋ 觸覺", t:"指尖輕輕互碰，感覺溫度。"}, {s:"🌬️ 呼吸", t:"感受空氣進到鼻腔的涼爽。"}, {s:"🧠 覺察", t:"我現在的情緒是什麼顏色？"}]],
         adult: [[{s:"🌍 空間", t:"感覺身體被椅子支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中細微的安靜。"}, {s:"🌿 整合", t:"我允許所有的情緒暫時存在。"}]],
     };
 
     let selectedKey = 'none';
-    let isVoiceEnabled = true;
-    let currentSteps = [];
     let currentIdx = 0;
     let timerInterval;
 
@@ -158,80 +142,60 @@
         selectedKey = key;
         document.querySelectorAll('.music-opt').forEach(opt => opt.classList.remove('active'));
         document.getElementById(`opt-${key}`).classList.add('active');
-        
         const music = document.getElementById('bg-music');
         if (key !== 'none') {
             music.src = musicLibrary[key];
-            // 關鍵：在切換時嘗試播放再暫停，騙過瀏覽器的鎖定機制
-            music.play().then(() => music.pause()); 
+            music.load();
         }
     }
 
-    function toggleVoice() {
-        isVoiceEnabled = !isVoiceEnabled;
-        document.getElementById('voice-icon').innerText = isVoiceEnabled ? "🔊" : "🔇";
-        document.getElementById('voice-text').innerText = `語音導引：${isVoiceEnabled ? '開啟' : '關閉'}`;
-    }
-
     function start(type) {
-        currentSteps = pool[type][Math.floor(Math.random() * pool[type].length)];
+        const steps = pool[type][0];
         currentIdx = 0;
         
+        // 核心解鎖：利用點擊事件強制開啟音樂與語音
         const music = document.getElementById('bg-music');
-        if (selectedKey !== 'none' && music.src) {
-            music.volume = 0.2;
-            // 藉由點擊動作強制播放
-            const playPromise = music.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    document.getElementById('page-hint').innerText = "請點擊螢幕開啟聲音";
-                    document.body.addEventListener('click', () => music.play(), {once: true});
-                });
-            }
+        if (selectedKey !== 'none') {
+            music.volume = 0.5;
+            music.play().catch(() => {});
         }
         
         document.getElementById('home-page').style.display = 'none';
         document.getElementById('content-page').style.display = 'flex';
-        runStep();
+        runStep(steps);
     }
 
-    function runStep() {
-        if (currentIdx >= currentSteps.length) { finish(); return; }
-        const item = currentSteps[currentIdx];
+    function runStep(steps) {
+        if (currentIdx >= steps.length) { finish(); return; }
+        const item = steps[currentIdx];
         document.getElementById('step-box').innerHTML = `
             <div class="sense-tag">${item.s}</div>
             <div class="step-text">${item.t.replace(/，/g, '<br>')}</div>
         `;
-        if (isVoiceEnabled) speak(item.t);
-        startTimer(10, () => { currentIdx++; runStep(); });
-    }
+        
+        // 語音播放
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(item.t);
+        u.lang = 'zh-TW'; u.rate = 0.8;
+        window.speechSynthesis.speak(u);
 
-    function startTimer(seconds, callback) {
-        let timeLeft = seconds;
+        let timeLeft = 10;
         document.getElementById('timer-display').innerText = timeLeft;
         clearInterval(timerInterval);
         timerInterval = setInterval(() => {
-            timeLeft--; 
-            document.getElementById('timer-display').innerText = (timeLeft <= 0) ? "✨" : timeLeft;
-            if (timeLeft <= 0) { clearInterval(timerInterval); callback(); }
+            timeLeft--;
+            document.getElementById('timer-display').innerText = timeLeft > 0 ? timeLeft : "✨";
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                currentIdx++;
+                setTimeout(() => runStep(steps), 1000);
+            }
         }, 1000);
     }
 
-    function speak(content) {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(content);
-        u.lang = 'zh-TW'; u.rate = 0.8;
-        window.speechSynthesis.speak(u);
-    }
-
     function finish() {
-        document.getElementById('timer-display').innerText = "✨";
         document.getElementById('step-box').innerHTML = `<div class="sense-tag">練習達成</div><div class="step-text">謝謝你，陪自己走了這段路。<br>平靜就在你的心裡。</div>`;
         document.getElementById('finish-area').style.display = 'block';
-    }
-
-    function stopPractice() {
-        location.reload();
     }
 </script>
 </body>
