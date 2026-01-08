@@ -1,38 +1,35 @@
-const CACHE_NAME = 'angel-steady-v11';
-const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon.png'
+const CACHE_NAME = 'angel-v1'; // 更新內容後請改版本號，例如 v1.1
+const ASSETS = [
+  'index.html',
+  'script.js',
+  'data.json',
+  'manifest.json',
+  'https://img.icons8.com/ios-filled/192/F2D388/clover.png'
 ];
 
-// 安裝：載入新的智慧開關邏輯
+// 安裝 Service Worker 並快取檔案
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Angel SW] 已快取 v11 智慧模式資源');
-      return cache.addAll(ASSETS_TO_CACHE);
+      console.log('正在快取資源');
+      return cache.addAll(ASSETS);
     })
   );
   self.skipWaiting();
 });
 
-// 激活：清理舊有的強制計時版本
+// 啟動並清理舊快取
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(keyList.map((key) => {
-        if (key !== CACHE_NAME) {
-          console.log('[Angel SW] 清理舊版暫存:', key);
-          return caches.delete(key);
-        }
-      }));
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+      );
     })
   );
-  return self.clients.claim();
 });
 
-// 攔截：確保在衝突現場無網路時也能開啟穩定空間
+// 攔截請求，優先從快取中讀取（實現離線使用）
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
@@ -40,4 +37,3 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
-
