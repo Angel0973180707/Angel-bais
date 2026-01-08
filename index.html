@@ -84,10 +84,10 @@
         
         <div class="settings-area">
             <div class="music-selector">
-                <div class="music-opt active" id="m-none" onclick="selectMusic('none')">保持寂靜</div>
-                <div class="music-opt" id="m-deep" onclick="selectMusic('深度頻率')">深度頻率</div>
-                <div class="music-opt" id="m-relax" onclick="selectMusic('舒緩波音')">舒緩波音</div>
-                <div class="music-opt" id="m-focus" onclick="selectMusic('平靜心流')">平靜心流</div>
+                <div class="music-opt active" id="opt-none" onclick="selectMusic('none')">保持寂靜</div>
+                <div class="music-opt" id="opt-deep" onclick="selectMusic('deep')">深度頻率</div>
+                <div class="music-opt" id="opt-relax" onclick="selectMusic('relax')">舒緩波音</div>
+                <div class="music-opt" id="opt-focus" onclick="selectMusic('focus')">平靜心流</div>
             </div>
             <div class="toggle-btn" onclick="toggleVoice()">
                 <span id="voice-icon">🔊</span>
@@ -120,18 +120,15 @@
 </div>
 
 <script>
-      // 挑選極其低刺激、無規律、無旋律的純頻率聲音
+    // 極低刺激環境音連結
     const musicLibrary = {
         none: "",
-        // 深海頻率：極低頻的嗡鳴，完全沒有高音，像待在安靜的深海
-        '深度頻率': "https://cdn.pixabay.com/audio/2022/07/21/audio_1454530869.mp3", 
-        // 森林暖風：類似白噪音但更柔和，像遠處樹葉吹動的聲音
-        '舒緩波音': "https://cdn.pixabay.com/audio/2022/05/17/audio_03960098df.mp3", 
-        // 宇宙空靈：極緩慢的氣流聲，沒有任何打擊樂器
-        '平靜心流': "https://cdn.pixabay.com/audio/2022/11/04/audio_3d1d528b17.mp3"
+        deep: "https://cdn.pixabay.com/audio/2022/07/21/audio_1454530869.mp3", 
+        relax: "https://cdn.pixabay.com/audio/2022/05/17/audio_03960098df.mp3", 
+        focus: "https://cdn.pixabay.com/audio/2022/11/04/audio_3d1d528b17.mp3"
     };
 
-  const pool = {
+    const pool = {
         kids: [
             [{s:"👀 視覺", t:"閉上眼，心裡現在是什麼顏色？"}, {s:"✋ 觸覺", t:"想像這顏色像棉花糖一樣軟。"}, {s:"🌬️ 嗅覺", t:"聞聞看，它有草莓的味道嗎？"}],
             [{s:"👂 聽覺", t:"聽聽腦袋裡，有沒有小精靈在唱歌？"}, {s:"✋ 觸覺", t:"摸摸肚子，感覺它像氣球一樣動。"}, {s:"👀 視覺", t:"想像心裡有一道彩虹亮起來了。"}],
@@ -149,29 +146,33 @@
         ],
         adult: [
             [{s:"🌍 空間", t:"這份情緒，是屬於現在的嗎？"}, {s:"👂 聽覺", t:"聽聽呼吸，是急促還是平緩？"}, {s:"🌿 整合", t:"看見偏見，但我選擇溫和對待。"}],
-            [{s:"✋ 觸覺", t:"感覺腳掌與地面接觸的每個部位。"}, {s:"👀 視覺", t:"環顧四周，確認我現在是安全的. "}, {s:"🌿 整合", t:"允許混亂存在，我不必立刻解決。"}],
+            [{s:"✋ 觸覺", t:"感覺腳掌與地面接觸的每個部位。"}, {s:"👀 視覺", t:"環顧四周，確認我現在是安全的。"}, {s:"🌿 整合", t:"允許混亂存在，我不必立刻解決。"}],
             [{s:"🌍 空間", t:"感覺身體在椅子上，被支撐的力量。"}, {s:"👂 聽覺", t:"留意空間中，被遺忘的微小聲音。"}, {s:"🌿 整合", t:"感謝自己，願意停下來覺察。"}]
         ]
     };
 
-    let selectedMusicName = 'none';
+    let selectedKey = 'none';
     let isVoiceEnabled = true;
     let isAutoEnabled = true;
     let currentSteps = [];
     let currentIdx = 0;
     let timerInterval;
 
-    function selectMusic(name) {
-        selectedMusicName = name;
+    // 關鍵修正：使用英文 Key 避免中文匹配失敗
+    function selectMusic(key) {
+        selectedKey = key;
+        // 移除所有 active
         document.querySelectorAll('.music-opt').forEach(opt => opt.classList.remove('active'));
-        const targetId = name === 'none' ? 'm-none' : (name === '深度頻率' ? 'm-deep' : (name === '舒緩波音' ? 'm-relax' : 'm-focus'));
-        document.getElementById(targetId).classList.add('active');
+        // 加入 active 到正確元素
+        document.getElementById(`opt-${key}`).classList.add('active');
         
-        // 預先載入音樂
         const music = document.getElementById('bg-music');
-        if (name !== 'none') {
-            music.src = musicLibrary[name];
+        if (key !== 'none') {
+            music.src = musicLibrary[key];
             music.load(); 
+        } else {
+            music.pause();
+            music.src = "";
         }
     }
 
@@ -192,16 +193,10 @@
         currentIdx = 0;
         
         const music = document.getElementById('bg-music');
-        if (selectedMusicName !== 'none') {
-            music.src = musicLibrary[selectedMusicName];
-            music.volume = 0.2; 
-            // 關鍵修正：透過使用者點擊按鈕的行為，強制播放音樂
-            const playPromise = music.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("播放被攔截，將於語音開始後重試");
-                });
-            }
+        if (selectedKey !== 'none') {
+            music.src = musicLibrary[selectedKey];
+            music.volume = 0.15; 
+            music.play().catch(e => console.log("播放被攔截"));
         }
         
         document.getElementById('home-page').style.display = 'none';
